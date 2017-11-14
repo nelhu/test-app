@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>666</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			<input type="checkbox" class="">
+			<div class="list-group">
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="b1" ng-click="alert()"/></div>
+				<div class="list-group-item"><input type="button" class="btn btn-primary" value="b2" ng-click="alert2()"/></div>
+				<div class="list-group-item"><input type="button" class="btn btn-primary" value="b3" ng-click="alert3()"/></div>
+				
+			</div>
+			
+			<hr />
+			
+			<input type="checkbox" ng-model="vehicleAllFlag" ng-change="selectAll()" id="testCheckBox">
+			<div class="list-group">
+				<div class="list-group-item img-rounded" ng-repeat="item in tests">
+					<input type="checkbox" class="checkItem" ng-value="item.id">{{item.id}}
+					<input type="button" class="btn btn-primary" value="b1" ng-click="alert()"/>
+				</div>
+				
+			</div>
+			
+			<input type="button" class="btn btn-primary" ng-click="submit()"  value="submit"/>
+			
+			<select ><option id="asd">asd</option> <option id="ds">ds</option></select>
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		angular.module('AngularApp', ['oitozero.ngSweetAlert']).controller('AngularCtrl', function($scope, SweetAlert, $http, $document) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			
+			$scope.selectAll = function() {
+				var checked = $document.find('#testCheckBox').prop('checked');
+				var vehicles = $document.find('.checkItem');
+				if(checked) {
+				angular.forEach(vehicles, function(obj) {
+					obj.checked = true;
+				})
+				} else {
+					angular.forEach(vehicles, function(obj) {
+					obj.checked = false;
+				})
+				}
+			}
+			
+			$scope.submit = function() {
+				$scope.selectedVehicles = [];
+				var vehicles = $document.find('.checkItem');
+				angular.forEach(vehicles, function(obj) {
+					if (obj.checked) {
+						$scope.selectedVehicles.push(obj.value);
+					}
+				})
+				alert($scope.selectedVehicles);
+			}
+			
+			
+//			$scope.alert
+			$scope.alert = function() {
+				SweetAlert.swal({
+					title: $scope.test,
+					text: 'text',
+					type: 'success'
+				}, function() {
+					alert('ok');
+				});
+			}
+			$scope.test = "test tiittle";
+			$scope.tests = [{id: '101', name: 'barry'},{id: '102', name: 'niko'},{id: '103', name: 'mike'},{id: '104', name: 'tony'} ];
+			
+			
+//			$http.get('../package.json').success(function(response) {
+//				debugger;
+//				alert(response);
+//			});
+			$scope.alert2 = function() {
+				SweetAlert.swal({
+					title: 'title',
+					text: 'text',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "confirm"
+				}, function(isConfirm) {
+//					SweetAlert.swal("confirmd", 'text', 'success');
+					if (isConfirm) {
+						alert('ok');
+					} else {
+						alert('not');
+					}
+				})
+			}
+			
+			$scope.alert3 = function() {
+				SweetAlert.swal({
+					title: 'title',
+					text: 'text',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "confirm",
+					closeOnConfirm: false,
+					closeOnCancel: false
+				},function(isConfirm) {
+					 if (isConfirm) {
+      SweetAlert.swal("Deleted!", "Your imaginary file has been deleted.", "success");
+   } else {
+      SweetAlert.swal("Cancelled", "Your imaginary file is safe :)", "error");
+   }
+				})
+			}
+			
+			
+			
+			
+//			SweetAlert.swal({
+// title: "Are you sure?",
+// text: "Your will not be able to recover this imaginary file!",
+// type: "warning",
+// showCancelButton: true,
+// confirmButtonColor: "#DD6B55",
+// confirmButtonText: "Yes, delete it!",
+// closeOnConfirm: false}, 
+//function(){ 
+// SweetAlert.swal("Booyah!");
+//});
+//			
+		});
+	</script>
+	
+</html>

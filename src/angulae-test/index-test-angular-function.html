@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../../node_modules/angular/angular.js"></script>
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>angular tests</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			<div class="list-group">
+				
+				<div class="list-group-item">
+					<input type="button" class="btn btn-primary" value="test" ng-click="test()"/>
+				</div>
+				
+				<div class="list-group-item">
+					<input type="button" class="btn btn-primary" value="testParse" ng-click="testParse()"/>
+				</div>
+				
+			</div>
+			
+			<input type="text" ng-model="expression" />
+			
+			{{ParsedValue}}
+			
+			<hr/>
+			
+			<div id="bingToScope" name="customn" my="nelhu.name" bind-to-scope>
+				bingToScope
+			</div>
+			{{nelhu}}
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', []);
+		
+		app.controller('SecondCtrl', function($scope){
+			$scope.user = {name: 's02name'};
+		});
+		
+		app.directive('bindToScope', function($parse) {
+			
+			return {
+				
+				restrict: 'AE',
+				controller: function($scope) {
+					$scope.isolateVar = 'vvv';
+				},
+				link: function(scope, element, attrs, controller) {
+
+					var model = $parse(attrs.my);
+					var modelSetter = model.assign;
+					
+					var res = model(scope);
+					modelSetter(scope, 'hxz666');
+					var res = model(scope);
+					
+					element.bind('click', function() {
+						scope.$apply(function() {
+							modelSetter(scope, 'six');
+						});
+					});
+				}
+				
+			};
+			
+		});
+		
+		app.controller('AngularCtrl', function($scope, $http, $document,
+			$timeout, $interval, $window, $rootScope, $log, $parse) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			$scope.user = {name: 'sname'};
+			
+			$rootScope.user = {name: 'rsname'};
+			
+			$scope.nelhu = {
+				name: 'hxz'
+			};
+
+			//
+			$scope.testParse = function() {
+				
+//				var getter = $parse('user.name');
+//				var setter = getter.assign;
+				var context = {user:{name:'angular'}};
+				var locals = {user:{name:'local'}};
+//				
+//				expect(getter(context)).toEqual('angular');
+//				setter(context, 'newValue');
+//				expect(context.user.name).toEqual('newValue');
+//				expect(getter(context, locals)).toEqual('local');
+
+				var getter = $parse('user.name');
+				var res = getter($scope);
+				
+				var setter = getter.assign;
+				setter($scope, 'newVal');
+				var res2 = getter($scope);
+				
+				var res3 = getter($scope, $rootScope);
+				
+			}
+			
+//			 $scope.$watch("expression", function(newValue, oldValue, context){
+//      if(newValue !== oldValue){
+//          var parseFunc = $parse(newValue);
+//          $scope.ParsedValue = parseFunc(context);
+//      }
+//  });
+			
+
+	
+//			
+		});
+	</script>
+	
+</html>
