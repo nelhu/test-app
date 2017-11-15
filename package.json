@@ -12,7 +12,9 @@
   "author": "nelson",
   "license": "ISC",
   "dependencies": {
+    "angular-hammer": "^2.2.0",
     "angular-sweetalert": "latest",
+    "hammerjs": "^2.0.8",
     "jquery": "^3.2.1"
   }
 }
