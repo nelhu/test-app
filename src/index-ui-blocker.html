@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../node_modules/angular-block-ui/dist/angular-block-ui.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../node_modules/angular-block-ui/dist/angular-block-ui.js"></script>
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>666</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			<input type="checkbox" class="">
+			<div class="list-group">
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="blockUI" ng-click="block()"/></div>
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="myBlock" ng-click="myBlock()"/></div>
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="myBlock2" ng-click="myBlock2()"/></div>
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="testInterval" ng-click="testInterval()"/></div>
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="testTimeout" ng-click="testTimeout()"/></div>
+				
+			</div>
+			
+			<hr />
+			{{showMessage}}
+			<div block-ui="myBlockUI" style="height: 500px;border: 1px solid red;">
+				my block ui
+			</div>
+			<i class="fa fa-spinner fa-spin"></i>
+		
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', ['blockUI']);
+		app.config(function(blockUIConfig) {
+			blockUIConfig.message = 'are you ok?';
+			blockUIConfig.delay = 0;
+			 blockUIConfig.template = '<div class="block-ui-message-container" aria-atomic="true"><div class="block-ui-message"><i class="fa fa-spinner fa-spin"></i></div></div>';
+		});
+		app.controller('AngularCtrl', function($scope, $http, $document, blockUI, $timeout, $interval) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			
+			$scope.block = function() {
+				blockUI.start();
+				setTimeout(function() {
+					$scope.$apply(function() {
+					// use apply
+					blockUI.stop();
+				});
+					}, 5000);
+				//$scope.$apply();
+//				$timeout(function() {blockUI.stop();}, 1000);
+				
+			}
+			
+			$scope.myBlock = function() {
+			
+				var mb = blockUI.instances.get('myBlockUI');
+				
+				mb.start({
+					message: 'waitting',
+				});
+				
+				$timeout(function() {mb.stop();}, 2000);
+				
+				mb.done(function() {alert('done')});
+			}
+			
+			
+				$scope.myBlock2 = function() {
+			
+					$http.get('localhost:8080').then(function(data) {
+						console.log(data);
+					}, function(response) {
+						alert(response);
+					});
+			}
+			
+			
+			$scope.testInterval = function() {
+				blockUI.start();
+				$interval(function(){
+					console.log('333');
+					blockUI.stop();
+				}, 2000);
+				console.log('in process');
+			}
+			
+			
+			$scope.testTimeout = function() {
+				$scope.showMessage = false;
+				var showMessagePromise = $timeout(function(){
+							$scope.showMessage = false;
+						}, 3000);
+						showMessagePromise.then(function() {
+							$scope.showMessage = true;
+						});
+			}
+			
+	
+//			
+		});
+	</script>
+	
+</html>

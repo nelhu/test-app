@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../node_modules/angular-block-ui/dist/angular-block-ui.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../node_modules/angular-block-ui/dist/angular-block-ui.js"></script>
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>angular tests</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			<input type="checkbox" class="">
+			<div class="list-group">
+				<div class="list-group-item">
+					<input type="button" class="btn btn-primary" value="test" ng-click="test()"/>
+				</div>
+				
+				<div class="list-group-item">
+					<input type="button" class="btn btn-primary" value="testWindow" ng-click="testWindow()"/>
+				</div>
+				
+				<div class="list-group-item">
+					<input type="button" class="btn btn-primary" value="testHttpInterceptor" ng-click="testHttpInterceptor()"/>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', []);
+		
+		app.factory('myInterceptor', ['$log', '$rootScope', function($log, $rootScope) {
+			
+			$log.info('interceptor initialized');
+			
+			return {
+				
+				// request interceptor
+				request: function(config) {
+//					$rootScope.beforRequest();
+					config.test = 'request before';
+					return config;
+				},
+				
+				// response interceptor
+				response: function(response) {
+//					$rootScope.beforResponse();
+					response.test = 'response before';
+				},
+				
+				// request Error interceptor
+				requestError: function(reason) {
+					$log.log('request failed');
+				},
+				
+				// response Error interceptor
+				responseError: function(response) {
+					debugger;
+					$log.log('response failed');
+					$q.reject(response);
+				}
+				
+			}
+			
+		}]);
+		
+		app.factory('myAsyncInterceptor', ['$log', '$rootScope', '$q', function($log, $rootScope, $q) {
+			
+			$log.info('asyncInterceptor initialized');
+			
+			return {
+				
+				// request interceptor
+				request: function(config) {
+					
+					var deferred = $q.defer();
+					
+					var d1 = $q.defer()
+					d1.resolve('111');
+					d1.promise
+					.then(function(value) {
+						$log.log(value);
+						deferred.resolve(config);
+					})
+					.then(function(value) {
+						$log.log(value);
+						deferred.reject(config);
+					}).then(function(value) {
+						$log.log('success');
+					},function(value) {
+						$log.log('rejected');
+					});
+					
+					return deferred.promise;
+				}
+				
+			}
+			
+		}]);
+		
+		app.config(['$httpProvider', function($httpProvider) {
+			
+			$httpProvider.interceptors.push('myInterceptor');
+			
+		}]);
+		
+		app.run(function($window, $rootScope, $http) {
+			
+			$rootScope.online = $window.navigator.onLine;
+				
+				$window.addEventListener('online', function() {
+					$rootScope.$apply(function() {
+						$rootScope.online = true;
+					});
+				});
+				
+				$window.addEventListener('offline', function() {
+					$rootScope.$apply(function() {
+						$rootScope.online = false;
+					});
+				});
+				
+			$rootScope.beforRequest = function() {
+				console.log('beforRequest');
+			}
+			
+			$rootScope.beforResponse = function() {
+				console.log('beforResponse');
+			}
+				
+		});
+		
+		
+		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			
+			$scope.testHttpInterceptor = function() {
+				
+				$http({
+					method: 'GET',
+					url: 'https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap-grid.css'
+				})
+				.then(function(response) {
+					$log.log('r success');
+				},function(response) {
+					$log.log('r failed');
+				});
+				
+			}
+			
+//			$scope.$watch('online', function(newVal, oldVal) {
+//				if (newVal == true) {
+//				alert('ok');
+//			} else {
+//				alert('bad');
+//			}
+//				
+//			});
+
+
+	
+//			
+		});
+	</script>
+	
+</html>

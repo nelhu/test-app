@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../node_modules/angular-block-ui/dist/angular-block-ui.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../node_modules/angular-block-ui/dist/angular-block-ui.js"></script>
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>666</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			<input type="checkbox" class="">
+			<div class="list-group">
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="blockUI" ng-click="block()"/></div>
+			</div>
+		
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', ['blockUI']);
+		app.config(function(blockUIConfig) {
+			blockUIConfig.message = 'are you ok?';
+			blockUIConfig.delay = 0;
+			 blockUIConfig.template = '<div class="block-ui-message-container" aria-atomic="true"><div class="block-ui-message"><i class="fa fa-spinner fa-spin"></i></div></div>';
+		});
+		app.controller('AngularCtrl', function($scope, $http, $document, blockUI, $timeout) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			
+			var p1 = function(flag) {
+				
+				return new Promise(function(resolve, reject) {
+					if (flag) {
+						console.log('success');
+						return resolve('success param');
+					} else {
+						console.log('failed');
+						return reject('falied param');
+					}
+				});
+				
+			}
+			
+			p1(true).then(function(value){
+				console.log(value)
+			}, function(value) {
+				console.log(value);
+			});
+			
+			///////////
+			
+			var p1 = function() {
+				
+				return new Promise(function(resolve, reject) {
+					setTimeout(function() {
+						console.log('执行任务1');
+						return resolve('任务1结果');
+					}, 1500);
+				});
+				
+			};
+			
+			var p2 = function() {
+				
+				return new Promise(function(resolve, reject) {
+					setTimeout(function() {
+						console.log('执行任务2');
+						return resolve('任务2结果');
+					}, 1500);
+				});
+				
+			};
+			
+			var p3 = function() {
+				
+				return new Promise(function(resolve, reject) {
+					setTimeout(function() {
+						console.log('执行任务3');
+						return resolve('任务3结果');
+					}, 1500);
+				});
+				
+			};
+			
+			// 任务1， 2， 3 顺序执行
+			p1()
+			.then(function(value) {
+				console.log(value); 
+				return p2(); // 回掉时执行次下一个任务， 返回下一个任务的promiseStatus和promiseValue
+			})
+			.then(function(value) { // 获取上一个任务的promiseValue
+				console.log(value);
+				return p3();
+			})
+			.then(function(value) {
+				console.log(value);
+				console.log('end');
+			});
+			
+			
+			
+	
+//			
+		});
+	</script>
+	
+</html>

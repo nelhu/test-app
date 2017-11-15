@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../node_modules/angular-block-ui/dist/angular-block-ui.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../node_modules/angular-block-ui/dist/angular-block-ui.js"></script>
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>$q</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			<input type="checkbox" class="">
+			<div class="list-group">
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="testQ" ng-click="testQ()"/></div>
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="testQ2" ng-click="testQ2()"/></div>
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="testInterval" ng-click="testInterval()"/></div>
+				<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="testReject" ng-click="testReject()"/></div>
+				
+			</div>
+		{{one}}
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', ['blockUI']);
+		app.controller('AngularCtrl', function($scope, $http, $document, blockUI, $timeout, $q, $interval) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			function q1(flag) {
+				
+				var deferred = $q.defer();
+				
+				if (flag) {
+					console.log('success');
+					deferred.resolve('success param');
+				} else {
+					console.log('failed');
+					deferred.reject('failed param');
+				}
+				
+				return deferred.promise;
+				
+			}
+			
+			function qr(flag) {
+				
+				var deferred = $q.defer();
+				
+				if (flag) {
+					console.log('success r');
+					deferred.resolve('success paramr');
+				} else {
+					console.log('failed r');
+					deferred.reject('failed param r');
+				}
+				
+				return deferred.promise;
+				
+			}
+			
+				function q2(flag) {
+				
+				var deferred = $q.defer();
+				
+				if (flag) {
+					console.log('success2');
+					deferred.resolve('success2 param');
+				} else {
+					console.log('failed2');
+					deferred.reject('failed2 param');
+				}
+				
+				return deferred.promise;
+				
+			}
+				
+			
+			// 直接链式调用
+			$scope.testQ = function() {
+				
+				var promise = q1(true);
+				promise
+				.then(function(value) {
+					console.log(value);
+					return 'first'; // 传递给下一个promise的参数
+				}, function(value) {
+					console.log(value)
+				})
+				.then(function(value) { // 获取上一个promise的参数，继续往下执行， 体现链式
+					console.log(value)
+				},function(value) {
+					console.log(value)
+				});
+			}
+			
+			$scope.testReject = function() {
+				var promise = qr(true);
+				promise.then(function(value) {
+					var d2 = $q.defer();
+					d2.reject(value);
+				}).then(function(value) { // 获取上一个promise的参数，继续往下执行， 体现链式
+					console.log(value)
+				},function(value) { // 获取上一个promise的参数，继续往下执行， 体现链式
+					console.log(value)
+				});
+			}
+			
+			/////////////
+			
+			function q2(flag, funcName) {
+				
+				var deferred = $q.defer();
+				
+				if (flag) {
+					funcName();
+					deferred.resolve('success param');
+				} else {
+					console.log('failed');
+					deferred.reject('failed param');
+				}
+				
+				return deferred.promise;
+				
+			}
+			
+			function doExecute() {
+				console.log('in execute');
+			}
+				
+			$scope.testQ2 = function() { 
+				
+				var deferred = $q.defer();
+//				var b = deferred.resolve();
+				var c = deferred.reject();
+				
+				
+				var a = deferred.promise
+				.then(function(value) {
+					console.log('111');
+				}, function(value) {
+					console.log('222');;
+				})
+				.then(function(value) {
+					console.log('333');
+				}, function(value) {
+					console.log('444');;
+				});
+				
+				a;
+			}
+			
+			// 
+			
+			$scope.testInterval = function() {
+				$interval(function(){
+					console.log('333')
+				}, 1000, 3);
+			}
+			
+//			
+		});
+	</script>
+	
+</html>
