@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="">
+		
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>JS</title>
+	</head>
+	<body>
+		
+		
+		<div class="container">
+				
+			
+			<button onclick="subscribe()">subscribe</button>
+			<button onclick="publish()">publish</button>
+			
+
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		// 自执行的匿名函数
+		var pubsub = (function(pubsub) {
+			
+			var topics = {}; // 所有的主题信息
+			var subscriber = function(token, callback) {
+				this.token = token;
+				this.callback = callback;
+			};
+			var subUid = 0;
+			
+			// 订阅
+			pubsub.subscribe = function(topic, func) {
+				
+				if (!topics[topic]) { // 订阅主题不存在
+					topics[topic] = []; // 生成改主题的订阅者数组
+				}
+				
+				 // 新订阅者
+				var token = (subUid++).toString();
+				var newSubscriber = new subscriber(token, func);
+				
+				topics[topic].push(newSubscriber); // 订阅者数组里添加该信订阅者
+				
+				return token;
+			}
+			
+			// 发布
+			pubsub.publish = function(topic, msg) {
+				
+				if (!topics[topic]) {
+					return false;
+				}
+				
+				var subscribers = topics[topic];
+				length = subscribers.length > 0 ? subscribers.length : 0;
+				
+				for (var i = 0; i <= length-1; i++) {
+					subscribers[i].callback(topic, msg);
+				}
+			}
+			
+			
+			return pubsub;
+			
+			
+		})(pubsub || {});
+	
+		// 先订阅
+		function subscribe() {
+			pubsub.subscribe('topic1', function(topic, msg) {
+				alert(topic + " 01-- " + msg);
+			});
+			
+			pubsub.subscribe('topic1', function(topic, msg) {
+				alert(topic + " 02 --" + msg);
+			});
+		}
+		
+		// 再发布
+		function publish() {
+			pubsub.publish('topic1', 'hello nihao');
+		}
+		
+	</script>
+	
+</html>

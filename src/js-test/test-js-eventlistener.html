@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="">
+		
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>JS</title>
+	</head>
+	<body>
+		
+		
+		<div class="container">
+				
+			<div id="testEventListener">content</div>
+			
+			<input type="text" id="input" />
+
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		// 自执行的匿名函数
+		(function a() {
+			
+			var dom = document.getElementById('testEventListener');
+			
+			var input = document.getElementById('input');
+			
+			dom.addEventListener('click', function(event) {
+				console.log(event);
+			}, false);
+			
+			dom.addEventListener('drag', function(event) {
+				console.log(event);
+			}, false);
+			
+			input.addEventListener('keydown', function(event) {
+				console.log(event);
+			}, false);
+			
+		})();
+		
+		
+	</script>
+	
+</html>
