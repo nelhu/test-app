@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../node_modules/mescroll.js/mescroll.min.css" />
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../node_modules/hammerjs/hammer.js"></script>
+		<script src="../node_modules/mescroll.js/mescroll.min.js"></script>
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>mescroll</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div id="container" class="container mescroll" style="border: 1px solid red;overflow: auto;height: 500px;">
+			
+			<div ng-repeat="i in [1, 2, 3, 4, 5,6, 7, 8, 9, 10, 345, 678, 588]">
+				<h2>aaa</h2>
+				<p>bbb</p>
+			</div>
+			
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		angular.module('AngularApp', []).controller('AngularCtrl', function($scope, $http, $document) {
+			
+			$scope.one = "mike";
+			$scope.email = "test";
+			
+		
+			var mescroll = new MeScroll('container', {
+				up: {
+					callback: function(me) {
+						console.log('up');
+						mescroll.endSuccess();
+					}
+				},
+				down: {
+					autoShowLoading: true,
+					callback: function(me) {
+						console.log('down');
+						mescroll.endSuccess();
+					}
+				}
+				
+			});
+
+
+			
+			
+		});
+	</script>
+	
+</html>

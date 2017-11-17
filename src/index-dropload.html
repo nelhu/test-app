@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../plugins/dropload/dropload.css" />
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../node_modules/hammerjs/hammer.js"></script>
+		
+		
+		<script src="../plugins/dropload/dropload.js"></script>
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			.item {
+				    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    -webkit-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 3.125%;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+			}
+			
+		</style>
+		<title>dropload</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container-fluid" style="border: 1px solid red;overflow: auto;height: 500px;">
+			
+			<!--<div ng-repeat="i in [1, 2, 3, 4, 5,6, 7, 8, 9, 10, 345, 678, 5464, 456, 6786797, 4564, 555,666, 243234]">
+				<h2>aaa</h2>
+				<p>bbb</p>
+			</div>
+			
+			<a class="item opacity" href="#1"><img src="http://d8.yihaodianimg.com/N05/M00/24/DF/CgQI0lQ3umiAYat_AAMa5tG_TXY20001_80x80.jpg" alt=""><h3>Apple 苹果 iPhone 6 Plus 16G 4G手机 金色 公开版（三网通用A1524)</h3><span class="date">2015-01-01</span></a>
+			
+			{{data}}-->
+			aaa
+			<div class="lists"></div>
+			
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		angular.module('AngularApp', []).controller('AngularCtrl', function($scope, $http, $document) {
+			
+			$scope.one = "mike";
+			$scope.email = "test";
+			
+//			(function() {
+//				$('.container-fluid').dropload({
+//					scrollArea : window,
+//					loadDownFn: function(dl) {
+//						$http.get('../package.json').then(function(response) {
+//							$scope.data = (JSON.stringify(response.data));
+//							dl.resetload();
+//						});
+//					},
+//					loadUpFn: function(dl) {
+//						$http.get('../package.json').then(function(response) {
+//							$scope.data = (JSON.stringify(response.data));
+//							dl.resetload();
+//						});
+//					}
+//				});
+//			})();
+//			
+
+
+$(function(){
+
+    // dropload
+    $('.container-fluid').dropload({
+        scrollArea : window,
+//      autoLoad: false,
+        domUp : {
+            domClass   : 'dropload-up',
+            domRefresh : '<div class="dropload-refresh">↓下拉刷新-自定义内容</div>',
+            domUpdate  : '<div class="dropload-update">↑释放更新-自定义内容</div>',
+            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中up-自定义内容...</div>'
+        },
+        domDown : {
+            domClass   : 'dropload-down',
+            domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中domn-自定义内容...</div>',
+            domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>'
+        },
+        loadUpFn : function(dl){
+        	console.log('up');
+        	me.resetload();
+        },
+        loadDownFn : function(dl){
+        	console.log('down');
+        	dl.noData(true);
+//      	$http.get('../package.json').then(function(response) {
+//							$scope.data = (JSON.stringify(response.data));
+//							dl.resetload();
+//						});
+        },
+        threshold : 50
+    });
+});
+
+			
+			
+		});
+	</script>
+	
+</html>
