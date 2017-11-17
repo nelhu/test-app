@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+angular-hammer@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/angular-hammer/-/angular-hammer-2.2.0.tgz#12ffbb3fc2f9719c780ba332c905ac8fca4592e0"
+  dependencies:
+    angular ">=1.2.0"
+    hammerjs ">=2.0.0"
+
 angular-sweetalert@latest:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/angular-sweetalert/-/angular-sweetalert-1.1.2.tgz#b5090c4e1fa486d9b61b9ea799d5b707bb04422f"
@@ -9,13 +16,25 @@ angular-sweetalert@latest:
     angular "^1.3.14"
     sweetalert "^0.4.2"
 
-angular@^1.3.14:
+angular@>=1.2.0, angular@^1.3.14:
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.6.6.tgz#fd5a3cfb437ce382d854ee01120797978527cb64"
+
+bootstrap@3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
+
+hammerjs@>=2.0.0, hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
 
 jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
+
+mescroll.js@:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/mescroll.js/-/mescroll.js-1.2.3.tgz#ee5fdf03261dac4d7c873d401678d011f2a7f086"
 
 sweetalert@^0.4.2:
   version "0.4.2"
