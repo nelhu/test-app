@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../node_modules/ng-material-floating-button/mfb/dist/mfb.css"/>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" />
+		<link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap-grid.css" rel="stylesheet">
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../node_modules/ng-material-floating-button/src/mfb-directive.js"></script>
+		
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		
+		<title>ng material floating button</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			{{one}}
+			<div test-tpl></div>
+			<hr>
+			
+			<div mfb-menu label="aaa" position="bl" effect="zoomin" active-icon="fa fa-user" resting-icon="fa fa-pencil" togggling-method="click" main-action="fired()">
+				<a mfb-button label="bbb" icon="fa fa-user" bgColor="#ddd"></a>
+				<a mfb-button label="ccc" icon="fa fa-user" bgColor="#ddd"></a>
+				
+			</div>	
+			
+		</div>
+		
+		
+		<script type="text/ng-template" id="tpl1">
+			<div><strong>tpl1</strong></div>
+		</script>
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', ['oitozero.ngSweetAlert', 'ng-mfb']);
+		
+		app.run(['$templateCache', function($templateCache) {
+			$templateCache.put('tpl2.html', '<div><span>{{var}}haha</span></div>');
+		}]);
+		
+		app.directive('testTpl', function() {
+			return {
+				templateUrl: 'tpl2.html',
+			}
+		});
+		
+		app.controller('AngularCtrl', function($scope, SweetAlert, $http, $document) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			$scope.fired = function() {
+				// alert('fired');
+			}
+						
+			
+			
+		});
+	</script>
+	
+</html>
