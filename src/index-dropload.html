@@ -52,8 +52,9 @@
 			<a class="item opacity" href="#1"><img src="http://d8.yihaodianimg.com/N05/M00/24/DF/CgQI0lQ3umiAYat_AAMa5tG_TXY20001_80x80.jpg" alt=""><h3>Apple 苹果 iPhone 6 Plus 16G 4G手机 金色 公开版（三网通用A1524)</h3><span class="date">2015-01-01</span></a>
 			
 			{{data}}-->
-			aaa
-			<div class="lists"></div>
+			<ul class="list">
+						
+			</ul>
 			
 			
 		</div>
@@ -69,59 +70,85 @@
 			$scope.one = "mike";
 			$scope.email = "test";
 			
-//			(function() {
-//				$('.container-fluid').dropload({
-//					scrollArea : window,
-//					loadDownFn: function(dl) {
-//						$http.get('../package.json').then(function(response) {
-//							$scope.data = (JSON.stringify(response.data));
-//							dl.resetload();
-//						});
-//					},
-//					loadUpFn: function(dl) {
-//						$http.get('../package.json').then(function(response) {
-//							$scope.data = (JSON.stringify(response.data));
-//							dl.resetload();
-//						});
-//					}
-//				});
-//			})();
+			(function() {
+				var a = $('.container-fluid').dropload({
+					scrollArea : window,
+					autoLoad: false,
+					domUp: {
+						domClass : 'dropload-up',
+						domRefresh: '<div class="dropload-refresh">↓↓↓下拉刷新</div>',
+						domUpdate : '<div class="dropload-update">↑↑↑release释放更新</div>',
+						domLoad : '<div class="dropload-load">loading...</div>'
+					},
+					domDown: {
+						domClass : 'dropload-down',
+						domRefresh : '<div class="dropload-refresh">↑↑↑上拉加载更多</div>',
+						domLoad : '<div class="dropload-load">loading加载中...</div>',
+						domNoData : '<div class="dropload-noData">no data暂无数据</div>'
+					},
+					loadDownFn: function(dl) {
+						alert('down');
+						$http.get('../json/pdlist1.json').then(function(response) {
+							$scope.data = response.data;
+							angular.forEach($scope.data, function(p) {
+								var pd = '<li>'
+								+'<p>'+p.pdName+'</p>'
+								+'<p>'+p.pdPrice+'</p>'
+								+'<p>'+p.pdSold+'</p>'
+								'</li>';
+								$document.find('.list').append(pd);
+//								alert('append');
+							});
+						}, function(){
+							alert('error');
+							me.resetload();
+						});
+						dl.resetload();
+					},
+					loadUpFn: function(dl) {
+						alert('up');
+						dl.resetload();
+					}
+				});
+				
+				a;
+			})();
 //			
 
-
-$(function(){
-
-    // dropload
-    $('.container-fluid').dropload({
-        scrollArea : window,
-//      autoLoad: false,
-        domUp : {
-            domClass   : 'dropload-up',
-            domRefresh : '<div class="dropload-refresh">↓下拉刷新-自定义内容</div>',
-            domUpdate  : '<div class="dropload-update">↑释放更新-自定义内容</div>',
-            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中up-自定义内容...</div>'
-        },
-        domDown : {
-            domClass   : 'dropload-down',
-            domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
-            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中domn-自定义内容...</div>',
-            domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>'
-        },
-        loadUpFn : function(dl){
-        	console.log('up');
-        	me.resetload();
-        },
-        loadDownFn : function(dl){
-        	console.log('down');
-        	dl.noData(true);
-//      	$http.get('../package.json').then(function(response) {
-//							$scope.data = (JSON.stringify(response.data));
-//							dl.resetload();
-//						});
-        },
-        threshold : 50
-    });
-});
+//
+//$(function(){
+//
+//  // dropload
+//  $('.container-fluid').dropload({
+//      scrollArea : window,
+////      autoLoad: false,
+//      domUp : {
+//          domClass   : 'dropload-up',
+//          domRefresh : '<div class="dropload-refresh">↓下拉刷新-自定义内容</div>',
+//          domUpdate  : '<div class="dropload-update">↑释放更新-自定义内容</div>',
+//          domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中up-自定义内容...</div>'
+//      },
+//      domDown : {
+//          domClass   : 'dropload-down',
+//          domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+//          domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中domn-自定义内容...</div>',
+//          domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>'
+//      },
+//      loadUpFn : function(dl){
+//      	console.log('up');
+//      	me.resetload();
+//      },
+//      loadDownFn : function(dl){
+//      	console.log('down');
+//      	dl.noData(true);
+////      	$http.get('../package.json').then(function(response) {
+////							$scope.data = (JSON.stringify(response.data));
+////							dl.resetload();
+////						});
+//      },
+//      threshold : 50
+//  });
+//});
 
 			
 			

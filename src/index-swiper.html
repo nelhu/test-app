@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.css" rel="stylesheet">
+		
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../node_modules/angular/angular.js"></script>
+		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.js"></script>
+		
+		
+		<script src="../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			.swiper-container {
+				height: 300px;
+			}
+			
+		</style>
+		<title>swiper</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			{{one}}
+			
+			<hr />
+			
+			
+			<div class="swiper-container" style="border: 1px solid red;">
+				
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="swiper-zoom-container">
+							<img class="swiper-lazy" data-src="../img/icon/scan256.png" />
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<img class="swiper-lazy" data-src="../img/icon/stick.png" />
+					</div>
+					<div class="swiper-slide">
+						<img class="swiper-lazy" data-src="../img/icon/man.png" />
+					</div>
+					<div class="swiper-slide">
+						<img class="swiper-lazy" data-src="../img/icon/emergency.png" />
+					</div>
+					<div class="swiper-slide">
+						<img class="swiper-lazy" data-src="../img/icon/nearby2.png" />
+					</div>
+				</div>
+				
+				<div class="swiper-pagination"></div>
+				
+			</div>
+			
+			<hr />
+			
+			<div ng-repeat="i in [1, 2, 3, 4, 5,6, 7, 8, 9, 10, 345, 678, 5464, 456, 6786797, 4564, 555,666, 243234]" >
+				<h2>aaa</h2>
+				<p>bbb</p>
+			</div>
+				
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		angular.module('AngularApp', ['oitozero.ngSweetAlert']).controller('AngularCtrl', function($scope, SweetAlert, $http, $document) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			
+			// initial swiper
+			var mySwiper = new Swiper('.swiper-container', {
+				
+				initialSlide: 1,
+				speed: 500,
+				
+				lazyLoading: true, // 开启图片懒加载
+				lazyLoadingOnTransitionStart : true, // 当transition开始时就开始加载
+				lazyLoadingInPrevNext: true, // 懒加载前后图片
+				
+				zoom: true,
+				
+				pagination: '.swiper-pagination',
+				
+				onTouchEnd: function(swiper) {
+					console.log(swiper)
+				}
+				
+			});
+			
+			
+		});
+	</script>
+	
+</html>

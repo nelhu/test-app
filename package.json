@@ -17,6 +17,9 @@
     "bootstrap": "3.3.7",
     "hammerjs": "^2.0.8",
     "jquery": "^3.2.1",
+	"bootstrap":"3.3.7",
+	"mescroll.js": "",
+	"swiper": "3.4.2"
     "mescroll.js": "",
     "ng-material-floating-button": "^0.6.2"
   }
