@@ -21,7 +21,39 @@
 		
 		<style type="text/css">
 			
+			.mfb-component__wrap .mfb-component__button--main {
+				background-color: blue;
+			}
 			
+			.mfb-component__wrap .mfb-component__list li a {
+				background-color: palegreen;
+			}
+			
+			[data-mfb-label]:after {
+				display: none;
+			}
+			
+			
+			
+			.weilei-test li:after {
+				content: 'llll'
+			}
+			
+			p:before {
+				content: ' beforp ';
+				background-color:pink;
+				color:blue;
+				font-weight:bold;
+			}
+
+
+			p:after {
+				content: ' afterp';
+				background-color:yellow;
+				color:red;
+				font-weight:bold;
+			}
+
 		</style>
 		
 		<title>ng material floating button</title>
@@ -35,10 +67,18 @@
 			<div test-tpl></div>
 			<hr>
 			
-			<div mfb-menu label="aaa" position="bl" effect="zoomin" active-icon="fa fa-user" resting-icon="fa fa-pencil" togggling-method="click" main-action="fired()">
-				<a mfb-button label="bbb" icon="fa fa-user" bgColor="#ddd"></a>
-				<a mfb-button label="ccc" icon="fa fa-user" bgColor="#ddd"></a>
-				
+			<ul class="weilei-test">
+				<li>a</li>
+				<li>a</li>
+				<li>a</li>
+			</ul>
+			<p>ppp</p>
+			
+			
+			<hr>
+			<div mfb-menu position="br" effect="zoomin" active-icon="fa fa-user" resting-icon="fa fa-pencil" togggling-method="click" main-action="fired()" style="z-index: 19999;">
+				<a mfb-button icon="fa fa-user" ></a>
+				<a mfb-button icon="fa fa-user" ></a>
 			</div>	
 			
 		</div>

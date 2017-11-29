@@ -5,7 +5,6 @@
 		
 		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
 		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
-		<link rel="stylesheet" href="../../node_modules/angular-block-ui/dist/angular-block-ui.css"/>
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 		
 		<script src="../../node_modules/jquery/dist/jquery.js"></script>
@@ -14,7 +13,6 @@
 		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.min.js"></script>
 		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
 		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
-		<script src="../../node_modules/angular-block-ui/dist/angular-block-ui.js"></script>
 		<script src="../../dist/my.js"></script>
 		
 		<style type="text/css">
@@ -28,42 +26,23 @@
 		
 		<div class="container">
 			
-			<input type="checkbox" class="">
-			<div class="list-group">
-				<div class="list-group-item">
-					<input type="button" class="btn btn-primary" value="test" ng-click="test()"/>
-				</div>
-				
-				<div class="list-group-item">
-					<input type="button" class="btn btn-primary" value="testParse" ng-click="testParse()"/>
-				</div>
-				
-				
-				<div class="list-group-item">
-					<input type="button" class="btn btn-primary" value="testEval" ng-click="testEval()"/>
-				</div>
-				
-				<div class="list-group-item" onclick="alert('outer');">
-					<input type="button" class="btn btn-primary" value="testEvent" ng-click="testEvent($event)"/>
-				</div>
-				
-				
-				<hr>
-				<!--<input type="text"  ng-model="exp"/>-->
+				{{one}}
 				<div class="list-group">
-					<a class="list-group-item">{{parsedVaue}}</a>
-					<a class="list-group-item">{{parseValue2}}</a>
+					<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="remove" ng-click="remove()"/></div>
+					<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="injector" onclick="injector()"/></div>
+					
 				</div>
 				
-				<hr>
+				<hr />
 				
-				<div >
-					<input name="file" type="file" file-model="bpmn" />	
-				</div>		
+				<div class="jumbotron">
+					<h3>test dom $destory</h3>
+					<h4 id="destory" test-destory>waitting for remove</h4>
+				</div>
 				
-				{{user.name}}
+				<div class="jumbotron" id="externalTest">
+				</div>
 				
-			</div>
 			
 		</div>
 		
@@ -74,101 +53,49 @@
 	<script type="text/javascript">
 		
 		var app = angular.module('AngularApp', []);
-		
-		app.directive('fileModel', function ($parse) {
-	    return {
-	       restrict: 'A',
-	       link: function(scope, element, attrs) {
-	          var model = $parse(attrs.fileModel);
-	          var modelSetter = model.assign;
-	          
-	          element.bind('change', function(){
-	             scope.$apply(function(){
-	                modelSetter(scope, element[0].files[0]);
-	             });
-	          });
-	       }
-	    };
-	});
-		
+		app.directive('testDestory', ['$window', function($window) {
+			return {
+				restrict: 'AE',
+				link: function(scope, element, attr) {
+					element.on('click', function() {
+						alert('clicked');
+					});
+					element.on('$destroy', function() {
+						alert('destoried');
+					});	
+				}
+			}
+		}]);
 		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
 			
 			$scope.one = "mike";
-			$scope.email = "test"
+			$scope.test = "test"
+				
+			var dom = $document.find('#destory');
 			
-			$scope.a = '2';
-			$scope.b = '4';
+			$scope.remove = function() {
+				dom.remove();
+			}
 			
-		
-			 $scope.context = {
-						name: "nelhu",
-						age: 20
-					}
-				
-				$scope.exp =  "'Hello ' + name";
-
-				$scope.$watch('exp', function(newval, oldval) {
-					var parseFunc = $parse(newval);
-					$scope.parsedVaue = parseFunc($scope.context);
-				});
-				$scope.user = {name: 'test'};
-				
-//				var getter = $parse('user.name');
-//				var setter = getter.assign;
-//				var context = {user:{name:'AngularJS'}};
-//				var locals = {user:{name:'local'}};
-//				
-//				expect(getter(context)).toEqual('AngularJS');
-//				setter(context, 'newValue');
-//				expect(context.user.name).toEqual('newValue');
-//				expect(getter(context, locals)).toEqual('local');
-
-				$scope.testParse = function() {
-					
-					var user = {name: 'test'};
-					var locals = {name: 'local'};
-					
-//					var exp = 'user.name';
-//					
-//					var getter = $parse(exp);
-//					
-//					var res = getter(user);
-//					
-//					var setter = getter.assign;
-//					var res2 = getter(user);
-					
-					var getter = $parse('user.name'); 
-					var res = getter(user);
-					var setter = getter.assign; 
-					setter($scope, 'new name');
-					var res3 = getter(user, locals) ;// 传入作用域，返回值
-					setter($scope,'new name'); // 修改映射在scope上的属性的值为‘new value'
-					var res4 = getter(user)
-				}
-				
-				
-				$scope.testEval = function() {
-					
-					var res = $scope.$eval('a * b');
-				}
-				
-				$scope.testEvent = function($event) {
-					
-					var res = 'niu';
-					$event.stopPropagation();
-					$event.preventDefault();
-				}
-				
-				
-				
-				
-				
-				
-
-
+			
 	
 //			
 		});
+		
+		function injector() {
+			var html = '<span id="tt" ng-controller="AngularCtrl">external html {{one}}</span>';
+			
+			$('#externalTest').append(html);
+			
+			var jqElement = angular.element('#externalTest');
+			jqElement.injector().invoke(function($compile) {
+				var template = angular.element('#tt');
+				var scope = template.scope();
+				$compile(template)(scope);
+				 scope.$apply();
+			});
+
+		}
 	</script>
 	
 </html>
