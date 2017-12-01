@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			.itembar-container {
+	border-bottom: 1px solid #eee;
+	background-color: white;
+	height: 74px;
+	padding: 2px 4px;
+	position: relative;
+}
+
+.itembar-urgency-icon {
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	right: 5px;
+}
+
+.itembar-common-height {
+	height: 72px;
+}
+
+.itembar-thumb-img {
+	width: 64px;
+	height: 64px;
+}
+
+.itembar-left-content {
+	padding: 0px;
+	padding-top: 2px;	
+}
+
+.itembar-center-content {
+	padding-right: 0px;
+	padding-top: 2px;
+}
+
+.itembar-right-content {
+	padding: 2px 10px;
+}
+
+.itembar-common-margin {
+	margin-top: 3px;
+}
+
+.new-msg-sty {
+	color: red;
+	font-size: larger;
+	margin-left: 8px;
+}
+
+.new-msg-wrap {
+	display: block;
+}
+
+			
+		</style>
+		<title>angular tests</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+				{{one}}
+				<div class="list-group">
+					<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="remove" ng-click="remove()"/></div>
+					<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="alert" onclick="alert(666);"/></div>
+					
+				</div>
+				<hr />
+				{{issue}}
+				<div class="jumbotron">
+					
+					<my-panel title="title..." middle="middle..." description="description..." issue="issue" on-update="updateIssue(key, value)"></my-panel>
+					
+				</div>
+				
+				
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', []);
+		app.run(['$templateCache', function($templateCache) {
+			$templateCache.put('simplePanel.html', 
+			
+			'<div  class="itembar-container" ng-click="toDestnation()" style="border: 1px solid red"> ' + 
+	
+			'<div class="col-xs-2 col-sm-2 itembar-common-height itembar-left-content">' + 
+			'<img  class="img-rounded img-responsive itembar-thumb-img" src="img/noimg.png" />' + 
+			'</div>' + 
+	
+			'<div class="col-xs-8 col-sm-8 itembar-common-height itembar-center-content">' + 
+				'<span class="mobile-inline-to-block mobile-content-beyond-ellipsis"><strong>{{ctrl.title}}</strong></span>' + 
+				'<small class="mobile-inline-to-block itembar-common-margin">{{middle}}</small>' +
+				'<span class="mobile-inline-to-block mobile-content-beyond-ellipsis itembar-common-margin">{{description}}</span>' +
+			'</div>' + 
+	
+			'<div class="col-xs-2 col-sm-2 itembar-common-height itembar-right-content">' + 
+				'<a ng-style="levelColor" ng-click="ctrl.onUpdate(\'level\')">{{ctrl.issue.level}}</a><br>' + 
+				'<a ng-style="statusColor" ng-click="ctrl.test()">{{ctrl.issue.status}}</a><br>' + 
+				'<span class="new-msg-wrap itembar-common-margin"><i ng-if="newMsgFlag" class="fa fa-exclamation-circle new-msg-sty"></i></span>' + 
+			'</div>' + 
+	
+			'</div>'
+			
+			);
+		}]);
+		app.component('myPanel', {
+			templateUrl: 'simplePanel.html',
+			bindings: {
+				title: '@',
+				middle: '@',
+				description: '@',
+				issue: '<',
+				onUpdate: '&'
+			},
+			controllerAs: 'ctrl',
+			controller: function($scope, $element, $attrs) {
+				var ctrl = this;
+				
+				ctrl.one = 'tone';
+				
+				ctrl.test = function() {
+					alert('component test');
+				}
+				
+			}
+		});
+		
+		app.controller('AngularCtrl', function($rootScope, $scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
+			
+			$scope.one = "mike";
+			$scope.test = "test"
+			
+			$scope.issue = {level: 'lll', status: 'sss'};
+			
+			$scope.updateIssue = function(key, value) {
+				alert(key);
+				$scope.issue[key] = value;
+			}
+			
+//			
+		});
+		
+	</script>
+	
+</html>
