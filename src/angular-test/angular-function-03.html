@@ -17,7 +17,9 @@
 		
 		<style type="text/css">
 			
-			
+			.test {
+				color: red
+			}
 		</style>
 		<title>angular tests</title>
 	</head>
@@ -30,7 +32,7 @@
 				<div class="list-group">
 					<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="remove" ng-click="remove()"/></div>
 					<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="injector" onclick="injector()"/></div>
-					
+					<div class="list-group-item img-rounded"><input type="button" class="btn btn-primary" value="changeAttrVal" ng-click="changeAttrVal()"/></div>
 				</div>
 				
 				<hr />
@@ -41,6 +43,18 @@
 				</div>
 				
 				<div class="jumbotron" id="externalTest">
+				</div>
+				
+				<div class="jumbotron" id="cacheTest" ng-controller="CacheCtrl">
+					
+					<span>span</span>	
+				</div>
+				
+				<div class="jumbotron" id="attrTest">
+					
+					<span  data-cc-cc="cc" id="testAttr" name="cname" bh:a="" cf_f="d">attrTest</span>	
+					<input type="text" name="ip" id="ip"  value="{{one}}" test-attr/>
+					<input type="text"  ng-model="one"/>
 				</div>
 				
 			
@@ -66,18 +80,48 @@
 				}
 			}
 		}]);
-		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
+		
+		app.directive('testAttr', ['$window', function($window) {
+			return {
+				restrict: 'AE',
+				link: function(scope, element, attr) {
+					attr;
+					var normallizeAttr = attr.$normalize('cf_f');
+					attr.$addClass('test');
+					attr.$set('vfF', 'cxvxv');
+					var res = attr.$attr;
+					attr.$observe('value', function(val) {
+						alert('changed ' + val);
+					});
+				}
+			}
+		}]);
+		
+		
+		app.controller('CacheCtrl', ['$scope', '$cacheFactory', function($scope, $cacheFactory) {
+			var myCache = $cacheFactory('myCache');
+			myCache.put('key1', 'value1');
+			myCache.put('key2', 'value2');
+			myCache.get('key2');
+			var res1 = myCache.info();
+			var res2 = $cacheFactory.info();
+		}])
+		app.controller('AngularCtrl', function($rootScope, $scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
 			
 			$scope.one = "mike";
 			$scope.test = "test"
-				
+			$rootScope;
+			
 			var dom = $document.find('#destory');
 			
 			$scope.remove = function() {
 				dom.remove();
 			}
 			
-			
+			$scope.changeAttrVal = function() {
+				var dom = $document.find('#testAttr');
+				dom.attr('name', 'nnnn');
+			}
 	
 //			
 		});
