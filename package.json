@@ -14,13 +14,15 @@
   "dependencies": {
     "angular-hammer": "^2.2.0",
     "angular-sweetalert": "latest",
+	"angular-ui-bootstrap":"1.3.3",
     "bootstrap": "3.3.7",
     "hammerjs": "^2.0.8",
     "jquery": "^3.2.1",
 	"bootstrap":"3.3.7",
 	"mescroll.js": "",
-	"swiper": "3.4.2"
+	"swiper": "3.4.2",
     "mescroll.js": "",
+	"angular-animate": "1.5.3",
     "ng-material-floating-button": "^0.6.2"
   }
 }

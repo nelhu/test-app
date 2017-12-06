@@ -5,11 +5,13 @@
 		
 		<link rel="stylesheet" href="../node_modules/sweetalert/lib/sweet-alert.css"/>
 		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
-		<link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/Swiper/4.0.7/css/swiper.css" rel="stylesheet">
 		
-		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<!--<script src="../node_modules/jquery/dist/jquery.js"></script>-->
+		<script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.js"></script>
 		<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-		<script src="../node_modules/angular/angular.js"></script>
+		<!--<script src="../node_modules/angular/angular.js"></script>-->
+		<script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
 		<script src="../node_modules/sweetalert/lib/sweet-alert.js"></script>
 		<script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
 		<script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.js"></script>
@@ -95,6 +97,11 @@
 				lazyLoadingInPrevNext: true, // 懒加载前后图片
 				
 				zoom: true,
+				
+				onTransitionStart: function(swiper){
+					console.log('as');
+				    alert('as');
+				},
 				
 				pagination: '.swiper-pagination',
 				

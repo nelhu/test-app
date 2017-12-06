@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<style>
+			.box {
+    width: 400px; padding: 15px;  background-color: #f0f3f9;
+}
+.containe {
+    height: 0; position: relative;  overflow: hidden;
+    /*-webkit-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    -o-transition: all 0.6s;*/
+    transition: all 0.6s;
+}
+.containe img {  
+    position: absolute;  bottom: 0;
+}
+
+.img-container {
+				height: 20px;
+				border: 1px solid red;
+				width: 200px;
+				transition: all 0.5s;
+			}	
+			.img-container:hover {
+				height: 300px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		
+		<p>想看美女图片？<a href="javascript:" id="button">点击我</a></p>
+<div id="more" class="containe">
+    <img src="http://image.zhangxinxu.com/image/study/s/s256/mm1.jpg" height="191" />
+</div>
+
+<hr />
+<div class="img-container" id="imgContainer">
+				<img src="../../img/icon/emergency.png" id="img"/>
+			</div>
+
+		
+		<script>
+			
+			(function() {
+    var eleBtn = document.getElementById("button"),
+        eleMore = document.getElementById("more");
+    
+    var display = false;
+    
+    eleBtn.onclick = function() {
+        display = !display;
+        eleMore.style.height = display? "192px": "0px"
+        return false;
+    };
+})();
+			
+		</script>
+	</body>
+</html>

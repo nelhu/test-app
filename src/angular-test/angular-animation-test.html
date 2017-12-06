@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../../node_modules/angular-animate/angular-animate.js"></script>
+		
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			.fade.ng-enter {
+  				transition:0.5s linear all;
+  				/*opacity:0;*/
+			}
+
+			/* The finishing CSS styles for the enter animation */
+			.fade.ng-enter.ng-enter-active {
+			  opacity:1;
+			}
+			
+			.simple-animation {
+				transition: all 2s;
+				-moz-transition:all 2s; /* Firefox 4 */
+				-webkit-transition:all 2s; /* Safari and Chrome */
+				-o-transition:all 2s; /* Opera */
+			}
+
+			.test-parent {
+				border: 1px solid red;
+				width: 400px;
+				height: 300px;
+				transition: all 0.5s;
+			}	
+			
+			.test-child {
+				border: 1px solid red;
+				width: 200px;
+				height: 100px;
+				transition: 0.5s linear all;
+			}	
+			
+			.test-parent.test-child {
+				color: pink
+			}
+			
+			.test-parent .test-child {
+				color: blue
+			}
+			
+			.trans {
+				height: 0px;
+				display: none;
+			}
+			
+			.img-container {
+				overflow: hidden;
+				height: 0px;
+				border: 1px solid red;
+				width: 200px;
+				transition: all 1s;
+			}	
+			/*.img-container:hover {
+				height: 300px;
+			}*/
+			
+			.test-ng-animation {
+				height: 50px;
+				overflow: hidden;
+				transition: all 0.5s;
+			}
+			
+			.test-ng-animation.ng-hide{
+				height: 0px;
+				overflow: hidden;
+			}
+			
+			/*
+			 * 
+			 */
+			.fade.ng-hide {
+			  transition:2.5s linear all;
+			  opacity:0;
+			}
+			
+			/*
+			 * 
+			 */
+			.animate-if {
+  background:white;
+  border:1px solid black;
+  padding:10px;
+}
+
+.animate-if.ng-enter, .animate-if.ng-leave {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+  opacity:0; // 退出时
+  color: red;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+  opacity:1; // 呈现时
+  color: blue;
+}
+
+.clicked {
+	color: red;
+	font-size: larger;;
+	height: 200px;
+}
+
+			
+		</style>
+		<title>angular animation</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		{{flag}}
+		
+		<div class="container">
+			
+			<div class="list-group">
+				<p class="list-group-item">
+					<input class="btn btn-primary" type="button"  value="b" ng-click="test()"/>
+				</p>
+				<p class="list-group-item">
+					<a  class="btn btn-primary" ng-click="flag = !flag">changeFlsg</a>
+				</p>
+			</div>
+			
+			<div class="jumbotron">
+				<h4 id="toggle">css animation toggle</h4>
+				<div class="img-container" id="imgContainer">
+					<img src="../../img/icon/emergency.png" id="img"/>
+				</div>
+			</div>
+			
+			<div class="jumbotron">
+				<h4 ng-click="flag = !flag">angular animation</h4>
+				<div class="container">
+					<div class="list-group">
+						<div ng-show="flag" class="list-group-item test-ng-animation">
+							area
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="jumbotron">
+				<div ng-show="bool" class="fade">
+  					Show and hide me
+				</div>
+				<button ng-click="bool=!bool">Toggle</button>
+			</div>
+			
+			<div class="jumbotron">
+				<div class="list-group">
+					<p class="list-group-item slide" ng-repeat="item in ites">
+						{{item}}
+					</p>
+				</div>
+			</div>
+			
+			<div class="jumbotron">
+				<label>Click me: <input type="checkbox" ng-model="checked" ng-init="checked=true" /></label><br/>
+				Show when checked:
+				<span ng-if="checked" class="animate-if">
+				  This is removed when the checkbox is unchecked.
+				</span>
+			</div>
+			
+			<div class="jumbotron">
+				<h4>directive animation</h4>
+				<div my-dir>directive animation</div>
+			</div>
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', ['ngAnimate']);
+		
+		app.directive('myDir', ['$animate', function($animate) {
+  return function(scope, element) {
+    element.on('click', function() {
+      if (element.hasClass('clicked')) {
+        $animate.removeClass(element, 'clicked');
+      } else {
+        $animate.addClass(element, 'clicked');
+      }
+    });
+  };
+}]);
+		
+		app.animation('.slide', [function() {
+  return {
+    // make note that other events (like addClass/removeClass)
+    // have different function input parameters
+    enter: function(element, doneFn) {
+    		alert('asd');
+      $(element).fadeIn(1000, doneFn);
+
+      // remember to call doneFn so that AngularJS
+      // knows that the animation has concluded
+    },
+
+    move: function(element, doneFn) {
+    	alert('asd');
+      $(element).fadeIn(1000, doneFn);
+    },
+
+    leave: function(element, doneFn) {
+    	alert('asd');
+      $(element).fadeOut(1000, doneFn);
+    }
+    
+  }
+}]);
+		
+		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+				
+			$scope.flag = true;
+			$scope.test = function() {
+				$scope.flag = !$scope.flag;
+			};
+			
+			$scope.testTrans = function() {
+				var childEle = $document.find('#child');
+				childEle.addClass('trans');
+			};
+			$scope.items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+		
+		
+			////
+			
+			var toggle = $document.find('#toggle');
+			$scope.show = true;
+			toggle.on('click', function() {
+				$scope.show = !$scope.show;
+//				var img = document.getElementById("imgContainer").style.height = '300px';
+				var img = $document.find("#imgContainer");
+				var height;
+				if ($scope.show) {
+					height = '0px';
+				} else {
+					height = '80px';
+				}
+				img.css('height', height);
+				
+			});
+
+
+	
+//			
+		});
+	</script>
+	
+</html>

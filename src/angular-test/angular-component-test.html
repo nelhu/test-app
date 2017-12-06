@@ -119,7 +119,7 @@
 			'</div>' + 
 	
 			'<div class="col-xs-2 col-sm-2 itembar-common-height itembar-right-content">' + 
-				'<a ng-style="levelColor" ng-click="ctrl.onUpdate(\'level\')">{{ctrl.issue.level}}</a><br>' + 
+				'<a ng-style="levelColor" ng-click="ctrl.onUpdate()">{{ctrl.issue.level}}</a><br>' + 
 				'<a ng-style="statusColor" ng-click="ctrl.test()">{{ctrl.issue.status}}</a><br>' + 
 				'<span class="new-msg-wrap itembar-common-margin"><i ng-if="newMsgFlag" class="fa fa-exclamation-circle new-msg-sty"></i></span>' + 
 			'</div>' + 
@@ -159,9 +159,8 @@
 			
 			$scope.updateIssue = function(key, value) {
 				alert(key);
-				$scope.issue[key] = value;
+				$scope.issue['level'] = '456';
 			}
-			
 //			
 		});
 		
