@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+
+			
+		</style>
+		<title>angular animation</title>
+	</head>
+	<body ng-app="AngularApp">
+		<div class="container">
+			
+			<!--<input type="text" ng-model="one" />
+			<input type="text" ng-model="email" />-->
+			
+			<div ng-controller="PrentCtrl1">{{ctrl}}
+				<div ng-controller="PrentCtrl2">{{ctrl}}
+					<div ng-controller="AngularCtrl">{{ctrl}}
+						<span ng-click="testEmit()">testEmit</span>
+						<span ng-click="testBrocast()">testBrocast</span>
+				      <div ng-controller="ChildCtrl1">{{ctrl}}
+				      	<div ng-controller="ChildCtrl2">{{ctrl}}
+				      	</div>
+				      </div>
+			        </div>
+				</div>
+			</div>
+			
+			
+			<div ng-controller="AngularCtrl">
+				{{one}}
+				<form name="myForm">
+					<input name="name" ng-model="one"/>
+				</form>
+			</div>
+			
+		</div>
+			
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', []);
+		
+		
+		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
+			
+			$scope.ctrl = "AngularCtrl";
+			$scope.one = "mike";
+			$scope.email = {name:'tom', age: '34'};
+			
+			console.log(angular.version)
+			
+			$scope.$watchGroup(['one', 'email'], function(newv, oldv, scope) {
+				
+			});
+			
+			$scope.$watchCollection('email', function(newv, oldv, scope) {
+				newv;
+			});
+			
+			$scope.testEmit = function() {
+				$scope.$emit('nelhuup', {key: 'waoh!', value: 'emit'});
+			};
+			
+			$scope.testBrocast = function() {
+				$scope.$broadcast('nelhudown', {key: 'ohyear!', value: 'broadcast'});
+			};
+			
+			console.log(app.requires);
+			console.log(app.name);
+			
+			//FormController;
+			myForm;
+			
+		});
+		
+		app.controller('PrentCtrl1', function($scope) {
+			$scope.ctrl = "PrentCtrl1";
+			$scope.$on('nelhuup', function(e, args) {
+				e;
+			});
+		});
+		
+		app.controller('PrentCtrl2', function($scope) {
+			$scope.ctrl = "PrentCtrl2";
+			$scope.$on('nelhuup', function(e, args) {
+				e;
+			});
+		});
+		
+		app.controller('ChildCtrl1', function($scope) {
+			$scope.ctrl = "ChildCtrl1";
+			$scope.$on('nelhudown', function(e, args) {
+				e;
+			});
+		});
+		
+		app.controller('ChildCtrl2', function($scope) {
+			$scope.ctrl = "ChildCtr2";
+			$scope.$on('nelhudown', function(e, args) {
+				e;
+			});
+		});
+	</script>
+	
+</html>
