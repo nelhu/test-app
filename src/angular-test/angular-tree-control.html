@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../../node_modules/angular-tree-control/css/tree-control-attribute.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../../node_modules/angular-tree-control/angular-tree-control.js"></script>
+		
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>angular tree control</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			<div treecontrol class="tree-light" 
+				tree-model="mydata" 
+				options="treeOptions" 
+				on-selection="select(node, selected)"
+				selected-node="selectedNode"
+				expanded-nodes="expandedNodes"
+				on-node-toggle="toggled(node, expanded)">
+				<span style="color: red">{{node.name}} - {{$index}}</span>
+			</div>
+			
+			<hr />
+			{{selectedNode}}<br />
+			{{expandedNodes}}
+		</div>
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', ['treeControl']);
+		app.directive('mytest',function() {
+			return {
+				link: function(scope, element, attr) {
+					scope;
+					element.bind('click', function() {
+						scope;
+					});
+				}
+			}
+		});
+		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
+			
+			$scope.one = {'name':'mike'};
+			$scope.email = "test";
+			
+			
+			$scope.treeOptions = {
+				multiSelection: false,
+				nodeChildren: 'children',
+				dirSelectable: true,
+				
+			};
+			
+			$scope.select= function(node, selected) {
+				node;
+				$scope;
+			}
+			
+			$scope.toggled = function(node, expanded) {
+				node;
+			}
+			
+			$scope.mydata = [
+	{ "name" : "Joe", "age" : "21", "children" : [
+		{ "name" : "Smith", "age" : "42", "children" : [] },
+		{ "name" : "Gary", "age" : "21", "children" : [
+			{ "name" : "Jenifer", "age" : "23", "children" : [
+				{ "name" : "Dani", "age" : "32", "children" : [] },
+				{ "name" : "Max", "age" : "34", "children" : [] }
+			]}
+		]}
+	]},
+	
+	{ "name" : "Albert", "age" : "33", "children" : [] },
+	{ "name" : "Ron", "age" : "29", "children" : [] }
+];
+			
+		});
+	</script>
+	
+</html>
