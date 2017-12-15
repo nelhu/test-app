@@ -86,7 +86,50 @@
 									          </div>
 									          
 		</div>	
-				
+		
+		<div class="jumbotron">
+			
+			<uib-tabset active="activeJustified" justified="true">
+  		<uib-tab index="0" heading="汽车" sec:authorize="hasAnyRole('ROLE_QUERY_VEHICLES')" select="alert($event)">汽车</uib-tab>
+  		<uib-tab index="1" heading="工作车" sec:authorize="hasAnyRole('ROLE_QUERY_WORK_VEHICLES')" th:include="vehicle/info/vehicleView::workingCar" select="toWorkingCar()">工作车</uib-tab>
+  		<uib-tab index="2" heading="可用车辆" sec:authorize="hasAnyRole('ROLE_QUERY_VEHICLE_AVAILABLES')"  th:include="vehicle/info/vehicleView::vehicleAvailable" select="toVehicleAvailable()">可用车辆</uib-tab>
+  	</uib-tabset>
+			
+		</div>
+		
+		<div th:fragment="pagination">
+		<form  class="form-inline" style="float:right;margin-right:1vw">
+			<div class="form-group">
+				<ul uib-pagination
+					first-text="首页"
+					last-text="尾页"
+					next-text="下一页"
+					previous-text="上一页"
+		            total-items="pageInfos.totalElements"
+		            ng-model="pageInfos.number"
+		            max-size="1"
+		            boundary-link-numbers="true"
+		            boundary-links="true"
+		            items-per-page="pageInfos.size"
+		            ng-change="pageChange(pageInfos)">
+	    		</ul>
+			</div>
+			<div  class="form-group">
+				<select class="form-control" style="width: 80px;"  ng-init="pageInfos.size = pageSize[0]"
+					 ng-model="pageInfos.size" ng-options="size for size in pageSize"  ng-change="pageChange(pageInfos)">
+				</select>
+			</div>
+		</form>
+		
+	</div>
+			
+			
+			<footer class="navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <span>Winning!</span>
+  </div>
+</footer>
+
 				
 		</div>
 		
@@ -128,6 +171,10 @@
     isFirstOpen: true,
     isFirstDisabled: false
   };
+  
+  $scope.alert = function(e) {
+		  // 	alert(e);
+  }
 			
 //			
 		});

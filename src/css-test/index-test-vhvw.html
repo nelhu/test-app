@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="../../node_modules/angular/angular.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		
+		<style type="text/css">
+			
+			body {
+				border: 1px solid red;
+			}
+			
+			.demo1 {
+				width: 80vw;
+				border: 1px solid blue;
+			}
+			
+			.demo2 {
+				width: 20vw;
+				border: 1px solid pink;
+				float: right;
+			}
+			
+			.demo3 {
+				height: 70vh;
+				border: 1px solid yellow;
+				overflow-y: auto;
+			}
+			
+			
+			
+			
+			
+		</style>
+		<title>css tests</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="">
+			
+			<div class="demo1">demo1</div>
+			
+			<div class="demo2">demo2</div>
+			
+			<hr />
+			
+			<div class="demo3">demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3demo3</div>
+			
+			<hr />
+			
+			<!--<div style="border: 1px solid red;width: 70vw;height: 50vh;">
+				
+				<div style="border: 1px solid blue;width: 30vw;height: 20vh;"></div>
+				
+			</div>
+			-->
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', []);
+		
+		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+//			
+		});
+	</script>
+	
+</html>
