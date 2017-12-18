@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		 <script src="https://cdn.bootcss.com/angular-sanitize/1.5.3/angular-sanitize.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>angular tests</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			<!--{{one}}
+			<div ng-bind-html="html"></div>-->
+			
+			<p ng-repeat="i in [{id: '1', name: 'tom'}, {id: '2', name: 'tony'}, {id: '3', name: 'mark'}] |  limitTo: 2">{{i.name}}</p>
+			
+			<hr />
+			
+			<!--<p ng-repeat="j in [{id: '4', name: 'bb'}, {id: '5', name: 'tony'}, {id: '6', name: 'mark'}] |  limitTo: 1 | orderBy: 'id'">{{j.name}}</p>-->
+			
+			<hr>
+			<p ng-repeat-start="i in [{id: '1', name: 'tom'}, {id: '2', name: 'tony'}, {id: '3', name: 'mark'}]">{{i.name}}</p>
+			<p ng-repeat-end></p>
+			
+			
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', []);
+		
+		var ctrl = function($scope, testDependency) {
+			$scope.person  = {name: 'tom', age: '23'};
+			testDependency.warn($scope.person);
+		}
+		
+		app.controller('AngularCtrl', ['$scope', '$log', ctrl]);
+	</script>
+	
+</html>
