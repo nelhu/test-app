@@ -23,6 +23,7 @@
 	"swiper": "3.4.2",
     "mescroll.js": "",
 	"angular-animate": "1.5.3",
-    "ng-material-floating-button": "^0.6.2"
+    "ng-material-floating-button": "^0.6.2",
+	"ng-tags-input": "3.2.0"
   }
 }

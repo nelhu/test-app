@@ -14,12 +14,16 @@
 		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
 		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
 		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+		<script src="../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 		<script src="../../node_modules/angular-tree-control/angular-tree-control.js"></script>
 		
-		<script src="../../dist/my.js"></script>
 		
 		<style type="text/css">
-			
+			.fs {
+				border-color: rgb(145, 187, 221);
+				box-shadow: 0 0 8px rgba(82,168,236,.6);
+			}
 			
 		</style>
 		<title>angular tree control</title>
@@ -29,61 +33,212 @@
 		
 		<div class="container">
 			
-			<div treecontrol class="tree-light" 
+			<!--<div treecontrol class="tree-light" 
 				tree-model="mydata" 
 				options="treeOptions" 
 				on-selection="select(node, selected)"
 				selected-node="selectedNode"
 				expanded-nodes="expandedNodes"
 				on-node-toggle="toggled(node, expanded)">
-				<span style="color: red">{{node.name}} - {{$index}}</span>
-			</div>
+				<span>{{node.name}} - {{$index}}</span>
+			</div>-->
 			
 			<hr />
 			{{selectedNode}}<br />
-			{{expandedNodes}}
+			<!--{{expandedNodes}}-->
+			
+			<div class="jumbotron">
+				<div class="dropdown">
+					<button class="btn btn-default" data-toggle="dropdown" style="width: 80%;">{{btnName}}<span class="caret"></span></button>
+					<ul class="dropdown-menu" style="width: 80%;margin-top: 0;padding-top: 0;">
+						<div ng-if="!isTreeShow" class="input-group" >
+							<input class="form-control"/>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-ok"></span></span>
+						</div>
+						 <div ng-if="isTreeShow" treecontrol class="tree-light" 
+							tree-model="mydata" 
+							options="treeOptions" 
+							on-selection="select(node, selected)"
+							selected-node="selectedNode"
+							expanded-nodes="expandedNodes"
+							on-node-toggle="toggled(node, expanded)">
+							<span>{{node.name}} - {{$index}}</span>
+						</div>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="jumbotron"> 
+			<h4></h4>
+				<div class="btn-group" uib-dropdown  auto-close="outsideClick"   is-open="start" style="width: 80%">
+					<button id="btn" type="button" class="btn btn-default"  uib-dropdown-toggle style="width: 100%;">
+						<span>{{selected ? selected.name : '请选择'}}</span><span class="caret"></span>
+					</button>	
+					<ul class="dropdown-menu form-control" uib-dropdown-menu role="menu"   style="height: 200px;overflow: auto;white-space:nowrap;margin-top: 0px;padding-top: 0px;">
+						<div  ng-if="!isTreeShow"  class="input-group" >
+							<input class="form-control" ng-model="selected.name"/>
+							<span class="input-group-addon" ng-click="confirmOther()"><span class="glyphicon glyphicon-ok"></span></span>
+						</div>
+						 <div treecontrol class="tree-light" 
+							tree-model="mydata" 
+							options="treeOptions" 
+							on-selection="select(node, selected)"
+							selected-node="selected"
+							expanded-nodes="expandedNodes"
+							on-node-toggle="toggled(node, expanded)">
+							<span>{{node.name}} - {{$index}}</span>
+						</div>
+					</ul>
+				</div>
+			
+			</div>
+			
+			
+			<div class="jumbotron">
+				 <div uib-dropdown auto-close="outsideClick" is-open="opened">
+			      <button type="button" class="btn btn-default" uib-dropdown-toggle style="width: 80%">请选择 <span class="caret"></span></button>
+			      <ul class="dropdown-menu" uib-dropdown-menu style="width: 80%;margin-top: 0px;padding-top: 0px;">
+			      	<div class="input-group" >
+						<input class="form-control"/>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-ok"></span></span>
+					</div>
+			         <div style="padding: 5px" treecontrol class="tree-light" 
+							tree-model="treeData" 
+							options="treeOptions" 
+							on-selection="select(node, selected)"
+							selected-node="selectedNode"
+							<span>{{node.name}}</span>
+						</div>
+			      </ul>
+			    </div>
+			</div>
+			
+			<hr />
+			
+			<div class="jumbotron">
+				<h4>current - {{current}}</h4>
+				<emms-tree-selector btn-name="选择起点" tree-data="treeData" selected-node="current" children-name="dd"></emms-tree-selector>
+				
+			</div>
+			
+			<!--<div class="jumbotron">
+				<h4>current2 - {{current2}}</h4>
+				<emms-tree-selector btn-name="选择终点" tree-data="treeData" selected-node="current2" children-name="children"></emms-tree-selector>
+				
+			</div>-->
+			
+			
 		</div>
 		
 		
+		
+		<div class="asdaint"></div>
+		
 	</body>
+	<script type="text/ng-template" id="emms-tree-selector.html">
+		 <div uib-dropdown auto-close="outsideClick" is-open="$ctrl.opened">
+			      <button type="button" class="btn btn-default" uib-dropdown-toggle style="width: 80%">{{$ctrl.selectedNode ? $ctrl.selectedNode.name : $ctrl.btnName}}&nbsp;&nbsp;<span class="caret"></span></button>
+			      <ul class="dropdown-menu" uib-dropdown-menu style="width: 80%;margin-top: 0px;padding-top: 0px;max-height: 300px;overflow: auto;">
+			      	<div class="input-group" ng-show="$ctrl.isOtherShow">
+						<input class="form-control inner-input" ng-model="$ctrl.tempInput"/>
+						<span class="input-group-addon" ng-click="$ctrl.confirm()"><span class="glyphicon glyphicon-ok"></span></span>
+					</div>
+			         <div style="padding: 5px" treecontrol class="tree-light" 
+							tree-model="$ctrl.treeData" 
+							options="$ctrl.treeOptions" 
+							on-selection="$ctrl.select(node, selected)"
+							selected-node="$ctrl.selectedNode"
+							<span>{{node.name}}</span>
+						</div>
+			      </ul>
+			    </div>
+	</script>
 	
 	<script type="text/javascript">
 		
-		var app = angular.module('AngularApp', ['treeControl']);
-		app.directive('mytest',function() {
-			return {
-				link: function(scope, element, attr) {
-					scope;
-					element.bind('click', function() {
-						scope;
-					});
+		var app = angular.module('AngularApp', ['treeControl', 'ui.bootstrap']);
+		app.component('emmsTreeSelector', {
+			templateUrl: 'emms-tree-selector.html',
+			bindings: {
+				btnName: '@',
+				treeData: '<',
+				childrenName: '@',
+				selectedNode: '=',
+			},
+			controller: function($scope, $element, $attrs) {
+				
+				// 初始化
+				var ctrl = this;
+				ctrl.opened = false;
+				ctrl.isOtherShow = false;
+				
+				// treedata
+				if (ctrl.treeData) {
+					ctrl.treeData.push({ "id" : "", "name" : "其他...", "children" : [] });
 				}
+				
+				
+				// 获取输入框元素
+				var inputElement = $element[0].getElementsByClassName('inner-input')[0];
+				var inputJqElement = angular.element(inputElement);
+				
+				ctrl.select = function(node, selected) {
+					if (selected) {
+						if (node.id) {
+							if (ctrl.tempInput) {
+								ctrl.tempInput = null;
+								ctrl.isOtherShow = false;
+							}
+							ctrl.opened = false;
+						} else {
+							// 其他
+							ctrl.isOtherShow = true;
+							inputElement.focus();
+							inputJqElement.addClass('fs');
+						}
+						
+					}
+				}
+				
+				ctrl.confirm = function() {
+					ctrl.selectedNode = {};
+					ctrl.selectedNode.name = ctrl.tempInput;	
+					ctrl.opened = false;
+				}
+				
+				ctrl.treeOptions = {
+					multiSelection: false,
+					nodeChildren: ctrl.childrenName,
+					dirSelectable: false,
+				};
+				
+				
+				
 			}
+		
 		});
 		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
 			
 			$scope.one = {'name':'mike'};
 			$scope.email = "test";
 			
-			
+			$scope.isTreeShow = true;
 			$scope.treeOptions = {
 				multiSelection: false,
 				nodeChildren: 'children',
-				dirSelectable: true,
+				dirSelectable: false,
 				
 			};
 			
 			$scope.select= function(node, selected) {
-				node;
-				$scope;
+				if (node.name == '其他') {
+					$scope.isTreeShow = false;
+				}
 			}
 			
-			$scope.toggled = function(node, expanded) {
-				node;
-			}
 			
-			$scope.mydata = [
-	{ "name" : "Joe", "age" : "21", "children" : [
+			$scope.treeData = [
+	{ "name" : "Joe", "age" : "21", "dd" : [
 		{ "name" : "Smith", "age" : "42", "children" : [] },
 		{ "name" : "Gary", "age" : "21", "children" : [
 			{ "name" : "Jenifer", "age" : "23", "children" : [
@@ -93,8 +248,8 @@
 		]}
 	]},
 	
-	{ "name" : "Albert", "age" : "33", "children" : [] },
-	{ "name" : "Ron", "age" : "29", "children" : [] }
+	{ "name" : "Albert", "id" : "33", "children" : [] },
+	{ "name" : "Ron", "id" : "29", "children" : [] }
 ];
 			
 		});

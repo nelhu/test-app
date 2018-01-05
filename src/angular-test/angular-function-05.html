@@ -22,28 +22,28 @@
 		</style>
 		<title>angular tests</title>
 	</head>
-	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+	<body ng-app="AngularApp" >
 		
 		
-		<div class="container">
-			
+		<div class="container" ng-controller="ctrl2">
+			{{person}}
 			<!--{{one}}
 			<div ng-bind-html="html"></div>-->
-			
-			<p ng-repeat="i in [{id: '1', name: 'tom'}, {id: '2', name: 'tony'}, {id: '3', name: 'mark'}] |  limitTo: 2">{{i.name}}</p>
-			
-			<hr />
-			
-			<!--<p ng-repeat="j in [{id: '4', name: 'bb'}, {id: '5', name: 'tony'}, {id: '6', name: 'mark'}] |  limitTo: 1 | orderBy: 'id'">{{j.name}}</p>-->
-			
-			<hr>
-			<p ng-repeat-start="i in [{id: '1', name: 'tom'}, {id: '2', name: 'tony'}, {id: '3', name: 'mark'}]">{{i.name}}</p>
-			<p ng-repeat-end></p>
-			
-			
+			<a ng-click='alert1()'>aaa</a>
+			<a ng-click='self()'>self</a>
+			<a ng-click='other()'>self</a>
 			
 		</div>
 		
+		<!--<div ng-controller="ctrl1"></div>-->
+		<hr />
+		
+		<div class="container" ng-controller="ctrl3">
+			{{person}}
+			<!--{{one}}
+			<div ng-bind-html="html"></div>-->
+			<a ng-click='alert1()'>aaa</a>
+		</div>
 		
 		
 	</body>
@@ -52,12 +52,31 @@
 		
 		var app = angular.module('AngularApp', []);
 		
-		var ctrl = function($scope, testDependency) {
+		var ctrl1= function($scope) {
+			$scope.one = undefined;
 			$scope.person  = {name: 'tom', age: '23'};
-			testDependency.warn($scope.person);
+			$scope.alert1 = function() {
+				alert("1111");
+				$scope.person.age = 100;
+			}
+			
+			$scope.other = function() {
+				alert($scope.one || $scope.person.name);	
+			}
 		}
 		
-		app.controller('AngularCtrl', ['$scope', '$log', ctrl]);
+		var ctrl2 = function($scope, $controller) {
+			$controller('ctrl1', { $scope: $scope });
+			$scope.self = function() {
+				alert('self');
+			}
+		}
+		
+		var ctrl3 = function($scope, $controller) {
+			$controller('ctrl1', { $scope: $scope });
+		}
+		
+		app.controller({'ctrl1' : ctrl1, 'ctrl2': ctrl2, 'ctrl3': ctrl3});
 	</script>
 	
 </html>
