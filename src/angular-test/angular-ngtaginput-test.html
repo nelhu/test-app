@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../../node_modules/ng-tags-input/build/ng-tags-input.css"/>
+		<link rel="stylesheet" href="../../node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css"/>
+		
+		
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../../node_modules/ng-tags-input/build/ng-tags-input.js"></script>
+		
+		
+		<style type="text/css">
+			
+			.emms-tags-input tags-input .host .tags input {
+				color: red;
+				width: 100%;
+			}
+			
+			
+
+			
+		</style>
+		<title>angular tests</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			{{tags}} {{currentText}}<hr />
+			<hr />
+			
+			<!--<div class="input-group">
+			    <tags-input class="" ng-model="tags" placeholder="请输入或选择"  allow-leftover-text="true" text="currentText" on-tag-clicked="click($tag)"
+			    	add-on-enter="false" add-on-space="false" add-on-comma="false" add-on-blur="false" add-on-paste="false">
+			    	
+			    </tags-input>
+			    <span class="input-group-addon" ng-click="addTags()">关联工单</span>
+			</div>-->
+			
+			<div class="jumbotron">
+				
+				<h4>component emms tag input</h4>{{tags}}&nbsp;{{current}}
+				
+				<emms-tags-input source="tags" btn-name="获取" placeholder="*" display-property="name" current-text="current" on-tag-click="tagClick" on-btn-click="btnClick()"></emms-tags-input>
+				
+			</div><br />
+			
+			<div class="jumbotron">
+				<button class="btn btn-primary" ng-click="click('1', {id: '666', name: 'tom'})">btn</button>
+				<input type="checkbox" ng-model="isHitch"/>
+			</div>
+			
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/ng-template" id="emms-tags-input.html">
+		<div class="input-group emms-tags-input">
+			<span ></span>
+			<tags-input ng-model="$ctrl.source"  allow-leftover-text="true" text="$ctrl.currentText" on-tag-clicked="$ctrl.onTagClick()($tag)"
+			   max-tags="2" key-property="id" display-property="{{$ctrl.displayProperty}}" add-on-enter="false" add-on-space="false" add-on-comma="false" add-on-blur="false" add-on-paste="false">
+			</tags-input>
+			<span class="input-group-btn" ng-click="$ctrl.btnClick()">
+			    <button class="btn btn-primary">{{$ctrl.btnName}}</button>
+			</span>
+		</div>
+	</script>
+		
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', ['ngTagsInput']);
+		app.config(function(tagsInputConfigProvider) {
+			tagsInputConfigProvider.setDefaults('tagsInput', { placeholder: '' });
+			tagsInputConfigProvider.setTextAutosizeThreshold();
+		});
+		
+		app.directive('either', function() {
+			
+			return {
+				require: 'ngModel',
+				link: function(scope, element, attrs, ctrl) {
+					scope;
+				}
+			}
+			
+		})
+		
+		app.component('emmsTagsInput', {
+			templateUrl: 'emms-tags-input.html',
+			bindings: {
+				source: '<',
+				displayProperty: '@',
+				btnName: '@',
+				placeholder: '@',
+				onTagClick: '&',
+				onBtnClick: '&',
+				currentText: '='
+			},
+			//controllerAs: 'ctrl',
+			controller: function($scope, $element, $attrs) {
+				var ctrl = this;
+				
+//				//ctrl.$attrs = $attrs;
+//				ctrl.tagClick = function(tag) {
+//					//ctrl.currentClick = tag;
+//				}
+//				
+//				ctrl.onTagClicked = function(tag) {
+//					if(!this.$attrs.click) 
+//						return;
+//					
+//					//ctrl.click.call({tag});
+//					ctrl.click({tag:tag});
+//					//ctrl.click()(tag);
+//				}
+//				
+//				ctrl.btnClick = function() {
+//					ctrl.onBtnClick();
+//				}
+
+//				ctrl.onTagClicked = function(tag) {
+//					ctrl.onTagClick()(tag);
+//				}
+
+				ctrl.btnClick = function() {
+					ctrl.currentText = null;
+					ctrl.onBtnClick();	
+				}
+ 				
+				
+			}
+		});
+		
+		app.controller('AngularCtrl', function($rootScope, $scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
+			this;
+			$scope.one = "mike";
+			$scope.test = "test"
+			$scope.currentClick = null;
+			$scope.tags = [];
+
+          
+          $scope.addTags = function() {
+          	$scope.tags = [
+            { id: '1', name: 'tom', age: '23'},
+            { id: '2', name: 'mike', age: '24'},
+            { id: '3', name: 'tony', age: '25'}
+          ];
+          }
+			
+			
+			$scope.tagClick = function(pram) {
+
+				$scope.one = "one";
+				$scope.two = "two"
+				alert(pram.text);
+			}
+			
+			$scope.btnClick = function() {
+				console.log('btn clicked');
+				$scope.addTags();
+			}
+			
+			$scope.click = function(p1, p2) {
+				$scope.addTags();
+			}
+
+			$scope.isHitch = true;
+//
+		});
+		
+	</script>
+	
+</html>

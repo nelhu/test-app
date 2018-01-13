@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			.dropdown-menu-align {
+				min-width: 100%;margin-top: 0;
+			}
+			
+			.fs {
+				border-color: rgb(145, 187, 221);
+				box-shadow: 0 0 8px rgba(82,168,236,.6);
+			}
+			
+		</style>
+		<title>emms editable select</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+				<div class="input-group dropdown">
+				  <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+				  <div class="input-group-addon" data-toggle="dropdown"><span class="caret"></span></div>
+				  <ul class="dropdown-menu dropdown-menu-align">
+						 <li><a href="#">Action</a></li>
+					</ul>
+				</div>
+			
+			
+			<div class="jumbotron">
+				
+				<div class="dropdown" style="border: 1px solid red;">
+					<button class="btn btn-default" data-toggle="dropdown" style="border: 1px solid blue;">toggle</button>
+					<ul class="dropdown-menu">
+						 <li><a href="#">Action</a></li>
+					</ul>
+				</div>
+				
+			</div>
+			
+			<div class="jumbotron">
+				
+				<div class="from-group has-feedback">
+					<label class="control-label sr-only">label</label>
+					<input type="text" class="form-control" data-toggle="dropdown"/>
+					<span class="glyphicon glyphicon-menu-down form-control-feedback"></span>
+					<ul class="dropdown-menu dropdown-menu-align">
+						 <li><a href="#">6666666</a></li>
+					</ul>
+				</div>
+				
+				<hr />
+				
+				<div class="form-group has-feedback">
+				  <label class="control-label" for="t02">Input with success</label>
+				  <input type="text" class="form-control" id="t02" aria-describedby="inputSuccess2Status">
+				  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+				  <span id="inputSuccess2Status" class="sr-only">(success)</span>
+				</div>
+				
+				<hr />
+				
+				<input type="text"  id="st"/>
+				
+			</div>
+			
+			<div class="jumbotron">
+				<h4>editable dropdown</h4> {{current}}
+				<emms-editable-dropdown drop-down-list="list" current-select="current"></emms-editable-dropdown>
+			</div>
+			
+		</div>
+		
+		
+		
+	</body>
+	
+	<script type="text/ng-template" id="emms-editable-dropdown.html">
+		<div class="from-group has-feedback">
+					<label class="control-label sr-only">label</label>
+					<input type="text" class="form-control" ng-model="selected.name"  ng-blur="loseFocus()" data-toggle="dropdown" readonly style="background-color: white;"/>
+					<span class="glyphicon glyphicon-menu-down form-control-feedback"></span>
+					<ul class="dropdown-menu dropdown-menu-align">
+						 <li ng-repeat="item in items" ng-click="select(item)"><a href="#">{{item.name}}</a></li>
+						 <li ng-click="select('other')"><a>其他</a></li>
+					</ul>
+		</div>
+	</script>
+	
+	<script type="text/javascript">
+		
+		
+		
+		
+		
+	</script>
+	
+</html>

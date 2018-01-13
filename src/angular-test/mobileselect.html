@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../../plugins/mobileSelect/mobileSelect.css"/>
+		
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="https://cdn.bootcss.com/require.js/2.3.5/require.js"></script>-->
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.min.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../plugins/mobileSelect/mobileSelect.js"></script>
+		
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+		</style>
+		<title>mobile select </title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			{{one}}
+			
+			
+			<div class="jumbotron">
+				<h4>单选</h4>
+				<div id="trigger">触发</div> 
+			</div>
+			
+			<div class="jumbotron">
+				<h4>单一选择 - 指令</h4>{{selected}}
+				<a single-dropdown-select id="single" title="选择" source="usages" selected="selected">触发</a>
+			</div>
+			
+				<div class="jumbotron">
+				<h4>时间选择 - 指令</h4>{{datetime}}
+				<a datetime-dropdown-select id="datetime" title="乘车时段" selected="datetime">触发</a>
+			</div>
+			
+			
+			
+		</div>
+		
+		
+		
+		<script type="text/ng-template" id="single-dropdown-select.html">
+			
+		</script>
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', []);
+		app.directive('singleDropdownSelect', [function() {
+			
+			return {
+				restrict: 'A',
+				scope: {
+					trigger: '@id',
+					title: '@title',
+					source: '=',
+					selected: '='
+				},
+				controller: ['$scope', '$element', '$attrs', function($scope, $element, $attr) {
+					
+					function init() {
+						var wheelsData = transformSource();
+						var selector = new MobileSelect({
+							trigger: '#' + $scope.trigger,
+							title: $scope.title,
+							wheels: wheelsData,
+							position: [0],
+							callback: function(indexs, selected) {
+								$scope.$apply(function() {
+									if ($scope.wheelsData.length > 1) {
+										
+									} else {
+										$scope.selected = selected[0];
+									}
+									
+								});
+							},
+							keyMap: {
+								id:'id',
+					            value: 'name',
+					            childs :'children'
+							}
+						});
+					}
+					
+					
+					function transformSource() {
+						$scope.wheelsData = [
+											{data: []}
+										 ];
+						$scope.wheelsData[0].data = $scope.source;
+						return $scope.wheelsData;
+					}
+					
+					
+					init();
+				}]
+			}
+			
+		}]);
+		
+		app.directive('datetimeDropdownSelect', [function() {
+			
+			return {
+				restrict: 'A',
+				scope: {
+					trigger: '@id',
+					title: '@title',
+					selected: '='
+				},
+				controller: ['$scope', '$element', '$attrs', function($scope, $element, $attr) {
+					
+					function init() {
+						var wheelsData = transformSource();
+						var selector = new MobileSelect({
+							trigger: '#' + $scope.trigger,
+							title: $scope.title,
+							wheels: wheelsData,
+							position: [0, 7, 0],
+							triggerDisplayData: false,
+							callback: function(indexs, selected) {
+								$scope.$apply(function() {
+									var date = selected[0].substr(0, 10)
+									var hourValue = selected[1].substr(0, selected[1].length - 1);
+									var hour = hourValue < 10 ? '0' + hourValue : hourValue;
+									var minute = selected[2].substr(0, 2);
+									
+									$scope.selected = date + ' ' + hour + ":" + minute + ':00';
+									
+								});
+							},
+							keyMap: {
+								id:'id',
+					            value: 'name',
+					            childs :'children'
+							}
+						});
+					}
+					
+					
+					function transformSource() {
+						$scope.wheelsData = [
+											{data: []},
+											{data: []},
+											{data: []}
+										 ];
+						$scope.wheelsData[0].data = generateMonthday();
+						$scope.wheelsData[1].data = generateHour();
+						$scope.wheelsData[2].data = ['00分', '15分', '30分', '45分'];
+						
+						
+						return $scope.wheelsData;
+					}
+					
+					function generateMonthday() {
+						$scope.monthDays = [];
+						var todayDate = new Date();
+						var todayDescription = todayDate.toJSON().substr(0, 10) + ' 今天';
+						var tomorrowDate = new Date(new Date().setDate(todayDate.getDate() + 1));
+						var tomorrowDescription = tomorrowDate.toJSON().substr(0, 10) + ' 明天';
+						$scope.monthDays.push(todayDescription);
+						$scope.monthDays.push(tomorrowDescription);
+						for (var i = 2; i < 29; i++) {
+							var currentDate = new Date(new Date().setDate(todayDate.getDate() + i));
+							var dateDescription = currentDate.toJSON().substr(0, 10);
+							if (i <= 6) {
+								var description = ' 星期' + '一二三四五六日'.charAt(currentDate.getDay() - 1);	
+								var currentDateDescription = dateDescription + description;
+								$scope.monthDays.push(currentDateDescription);
+							} else {
+								$scope.monthDays.push(dateDescription);
+							}
+							
+						}
+						return $scope.monthDays;
+					}
+					
+					function generateHour() {
+						$scope.hours = [];
+						 for (var i = 0; i <= 23; i++) {
+		   					$scope.hours.push('' + i + '点');
+		   				 }
+						 return $scope.hours;
+					}
+					
+					
+					init();
+				}]
+			}
+			
+		}]);
+		
+		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse, $location) {
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			var mobileSelect1 = new MobileSelect({
+			    trigger: '#trigger', 
+			    title: '单项选择',  
+			    wheels: [
+			                {data:[
+			                	{id:'1', value: '001'},
+			                	{id:'2', value: '002'},
+			                	{id:'3', value: '003'},
+			                ]}
+			            ],
+			    position:[0],
+			});
+			
+			$scope.usages = [
+			{id: 1, name: '搭载货物'},
+			{id: 2, name: '接送人员'}
+			];
+			
+			
+		});
+	</script>
+	
+</html>

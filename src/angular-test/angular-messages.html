@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/sweetalert/lib/sweet-alert.css"/>
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		<script src="https://cdn.bootcss.com/angular-messages/1.5.3/angular-messages.js"></script>
+		 
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">	
+			
+			
+		</style>
+		<title>angular messages</title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			
+			
+			<div class="jumbotron">
+				<h4>my</h4>
+				<form name="my">
+				
+					<input type="number" name="numm" ng-model="numm" class="form-control" minlength="2"  maxlength="3" required/>{{my.numm.$error}}
+					
+					<!--{{my.$submitted}}-->
+					<div ng-messages="my.numm.$error" role="alert">
+						<!--<p ng-message="invalid">min max</p>-->
+						<!--<p ng-message="required">required or - {{validation.numm}}</p>-->
+						<!--p ng-message="pattern">pattern or - {{validation.numm}}</p>-->
+						<!--<div ng-messages-include="emms-validate-msgs.html"></div>-->
+						
+						<p ng-message="minlength, maxlength" class="form-field-validation-sty">min, maxlength</p>
+							
+					</div>
+					<span class="btn btn-primary" ng-click='set()'>set</span>
+				</form>
+				
+				
+			</div>
+			
+			
+			
+			
+			
+			<!--<div class="jumbotron">
+				<h4>offsite</h4>
+				<form name="myForm">
+				  <label>
+				    Enter text:
+				    <input type="email" ng-model="field" name="myField" required maxlength="15" />
+				  </label>
+				  <div ng-messages="myForm.myField.$error" role="alert">
+				    <div ng-message="required">Please enter a value for this field.</div>
+				    <div ng-message="email">This field must be a valid email address.</div>
+				    <div ng-message="maxlength">This field can be at most 15 characters long.</div>
+				  </div>
+				</form>
+			</div>-->
+			
+			<div class="jumbotron">
+				
+				<h4>my2</h4>
+				<form name="my2">
+				
+					<!--<input type="number" ng-model="num2" class="form-control"/>-->
+					<!--<input type="number" name="num2" ng-model="num2" class="form-control" minlength="2"  maxlength="3"/>-->
+					<!--<span ng-model="num2" name="num2" ng-minlength="2"  ng-maxlength="5" ></span>-->
+					<input type="number" name="num2" ng-model="num2" class="form-control" minlength="2"  maxlength="3"/>
+					
+					<!--{{my.$submitted}}-->
+					<div ng-messages="my2.num2.$error" role="alert">{{my2.num2.$error}}
+						<!--<p ng-message="invalid">min max</p>-->
+						<!--<p ng-message="required">required or - {{validation.numm}}</p>-->
+						<!--p ng-message="pattern">pattern or - {{validation.numm}}</p>-->
+						<!--<div ng-messages-include="emms-validate-msgs.html"></div>-->
+						
+						<p ng-message="minlength, maxlength" class="form-field-validation-sty">maxlength</p>
+							
+					</div>
+					<span class="btn btn-primary" ng-click='set()'>set</span>
+				</form>
+				
+			</div>
+			
+			
+			<div class="jumbotron">
+				
+				<h4>my3</h4>
+				<form name="my3">
+				
+					
+					<!--<input type="text"  ng-model="num3" name="num3"/>-->
+					<input type="text"  ng-model="num3" name="num3" minlength="2"  ng-maxlength="3"/>
+					<!--<span type="text"  ng-model="num3" name="num3" minlength="2"  maxlength="3"></span>-->
+					<div ng-messages="my3.num3.$error" role="alert" ng-show="my3.$pending">{{my3.num3.$error}}
+						
+						<p ng-message="minlength, maxlength" class="form-field-validation-sty">maxlength</p>
+							
+					</div>
+				</form>
+				
+			</div>
+			
+			
+			<div class="jumbotron">
+				
+				<div class="text-center">
+												<label><input type="radio" ng-model="type" value="0"/>单次</label>
+												<label><input type="radio" ng-model="type" value="1"/>时段</label>
+											</div>
+				changedT - {{changedT}}
+			</div>
+			
+			
+			<div class="jumbotron">
+				<input type="text" ng-model="m.a" />
+				<input type="text" ng-model="m.b" />
+			</div>
+			
+			
+			
+			
+		</div>
+		
+		
+		
+	</body>
+	<script type="text/ng-template" id="emms-validate-msgs.html">
+		<p ng-message="required">required</p>
+  		<p ng-message="minlength">minlength</p>
+  		<p ng-message="maxlength">maxlength</p>
+  		<p ng-message="pattern">pattern</p>
+  		<p ng-message="number">number</p>
+	</script>
+	
+	<script type="text/javascript">
+		
+		
+//		var emmsModule = (function(app) {
+//			
+//			var emms  = {'c1': 'c1config'};
+//				
+//			emms.a = "a";
+//			
+//			app.emms = emms;
+//			
+//			return app;
+//		
+//	}(emmsModule || {}));
+//	
+//	var emmsModule = (function(app) {
+//			
+//			var emms = app.emms;
+//		
+//			emms.b = "b";
+//			
+//			// app.emms = emms;
+//			
+//			return app;
+//		
+//	}(emmsModule || {}));
+	
+	
+
+
+
+		var app = angular.module('AngularApp', ['ngMessages']);
+		
+		app.controller('AngularCtrl', function($scope, $http, $document, $timeout, $interval, $window, $log, $parse, $location, $injector) {
+			
+//			var rootScope = angular.injector(['$rootScope']);
+
+			var rootScope = $injector.get('$rootScope');
+			
+			$scope.one = "mike";
+			$scope.email = "test"
+			
+			$scope.person = {};
+			
+			$scope.set = function() {
+				
+				$scope;
+				$scope.my3.$pending = true;
+//				$scope.my.$setDirty();
+//				$scope.my.$setSubmitted();
+//				$scope.my['numm'].$setValidity("pattern", false);
+//				$scope.validation = {'numm': 'message'};
+			}
+			
+			$scope.change = function() {
+				$scope.type;
+			}
+			
+			$scope.type= 0;
+			$scope.$watch('type', function(newVal, oldVal) {
+				if(newVal == 1 && oldVal == 0) {
+					$scope.changedT = true;
+				} else {
+					$scope.changedT = false;
+				}
+			});
+			
+			$scope.m = {a: '', b: ''};
+			$scope.$watch('m', function(newVal, oldVal) {
+				if(newVal) {
+					newVal;
+				}
+			}, true);
+			
+		});
+	</script>
+	
+</html>
