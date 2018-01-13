@@ -41,9 +41,14 @@
 				<a single-dropdown-select id="single" title="选择" source="usages" selected="selected">触发</a>
 			</div>
 			
-				<div class="jumbotron">
+			<div class="jumbotron">
 				<h4>时间选择 - 指令</h4>{{datetime}}
 				<a datetime-dropdown-select id="datetime" title="乘车时段" selected="datetime">触发</a>
+			</div>
+			
+			<div class="jumbotron">
+				<h4>二级联动选择 - 指令</h4>{{linkage}}
+				<a single-dropdown-select id="linkage" title="路线" selected="linkage" source="stations" child="stations">触发</a>
 			</div>
 			
 			
@@ -68,32 +73,33 @@
 				scope: {
 					trigger: '@id',
 					title: '@title',
+					child: '@',
 					source: '=',
 					selected: '='
 				},
 				controller: ['$scope', '$element', '$attrs', function($scope, $element, $attr) {
 					
 					function init() {
-						var wheelsData = transformSource();
+						transformSource();
 						var selector = new MobileSelect({
 							trigger: '#' + $scope.trigger,
 							title: $scope.title,
-							wheels: wheelsData,
+							wheels: $scope.wheelsData,
 							position: [0],
+							triggerDisplayData: false,
 							callback: function(indexs, selected) {
 								$scope.$apply(function() {
-									if ($scope.wheelsData.length > 1) {
-										
+									if ($scope.isMultiWheels) {
+										$scope.selected = selected[2]
 									} else {
 										$scope.selected = selected[0];
 									}
-									
 								});
 							},
 							keyMap: {
 								id:'id',
 					            value: 'name',
-					            childs :'children'
+					            childs : $scope.child ? $scope.child : 'childs '
 							}
 						});
 					}
@@ -104,6 +110,12 @@
 											{data: []}
 										 ];
 						$scope.wheelsData[0].data = $scope.source;
+						$scope.isMultiWheels = false;
+						for (var property in $scope.wheelsData[0].data[0]) {
+								if (Array.isArray($scope.wheelsData[0].data[0][property])) {
+									$scope.isMultiWheels = true;
+								}
+							}
 						return $scope.wheelsData;
 					}
 					
@@ -226,6 +238,17 @@
 			{id: 1, name: '搭载货物'},
 			{id: 2, name: '接送人员'}
 			];
+			
+			$scope.stations = [
+{"id":1,"name":"一号线",
+	"stations":[
+			{"id":1,"name":"站点","stations":[{"id":1,"name":"朝天门站"},{"id":2,"name":"小什字站"},{"id":3,"name":"较场口站"},{"id":4,"name":"七星岗站"},{"id":5,"name":"两路口站"},{"id":6,"name":"鹅岭站"},{"id":7,"name":"大坪站"},{"id":8,"name":"石油路站"},{"id":9,"name":"歇台子站"},{"id":10,"name":"石桥铺站"},{"id":11,"name":"高庙村站"},{"id":12,"name":"马家岩站"},{"id":13,"name":"小龙坎站"},{"id":14,"name":"沙坪坝站"},{"id":15,"name":"杨公桥站"},{"id":16,"name":"烈士墓站"},{"id":17,"name":"磁器口站"},{"id":18,"name":"双碑南站"},{"id":19,"name":"双碑北站"},{"id":20,"name":"赖家桥站"},{"id":21,"name":"微电园站"},{"id":22,"name":"陈家桥站"},{"id":23,"name":"大学城站"}]},
+			{"id":2,"name":"车场","stations":[{"id":83,"name":"赖家桥车场"},{"id":84,"name":"马家岩车场"}]}
+		]
+},
+{"id":2,"name":"二号线","stations":[{"id":1,"name":"站点","stations":[{"id":24,"name":"较场口站"},{"id":25,"name":"临江门站"},{"id":26,"name":"黄花园站"},{"id":27,"name":"大溪沟站"},{"id":28,"name":"曾家岩站"},{"id":29,"name":"牛角沱站"},{"id":30,"name":"李子坝站"},{"id":31,"name":"佛图关站"},{"id":32,"name":"大坪站"},{"id":33,"name":"袁家岗站"},{"id":34,"name":"谢家湾站"},{"id":35,"name":"杨家坪站"},{"id":36,"name":"动物园站"},{"id":37,"name":"大堰村站"},{"id":38,"name":"马王场站"},{"id":39,"name":"平安站"},{"id":40,"name":"大渡口站"},{"id":41,"name":"新山村站"},{"id":42,"name":"天堂堡站"},{"id":43,"name":"建桥站"},{"id":44,"name":"金家湾站"},{"id":45,"name":"刘家坝站"},{"id":46,"name":"白居寺站"},{"id":47,"name":"大江站"},{"id":48,"name":"鱼洞站"}]},{"id":2,"name":"车场","stations":[{"id":85,"name":"大堰车场"},{"id":86,"name":"白居寺车场"}]}]},
+{"id":3,"name":"六号线","stations":[{"id":1,"name":"站点","stations":[{"id":49,"name":"茶园站"},{"id":50,"name":"邱家湾站"},{"id":51,"name":"长生桥站"},{"id":52,"name":"刘家坪站"},{"id":53,"name":"上新街站"},{"id":54,"name":"小什字站"},{"id":55,"name":"大剧院站"},{"id":56,"name":"江北城站"},{"id":57,"name":"五里店站"},{"id":58,"name":"红土地站"},{"id":59,"name":"黄泥滂站"},{"id":60,"name":"红旗沟站"},{"id":61,"name":"花卉园站"},{"id":62,"name":"大龙山站"},{"id":63,"name":"冉家坝站"},{"id":64,"name":"光电园站"},{"id":65,"name":"竹林公园站"},{"id":66,"name":"大竹林站"},{"id":67,"name":"黄桷坪站"},{"id":68,"name":"礼嘉站"},{"id":69,"name":"金山寺站"},{"id":70,"name":"曹家湾站"},{"id":71,"name":"蔡家站"},{"id":72,"name":"向家岗站"},{"id":73,"name":"龙凤溪站"},{"id":74,"name":"北碚站"},{"id":75,"name":"天生站"},{"id":76,"name":"五路口站"},{"id":77,"name":"礼嘉站"},{"id":78,"name":"平场站"},{"id":79,"name":"黄茅坪站"},{"id":80,"name":"高义口站"},{"id":81,"name":"会展中心站"},{"id":82,"name":"悦来站"}]},{"id":2,"name":"车场","stations":[{"id":87,"name":"龙凤溪车场"},{"id":88,"name":"长生车场"},{"id":89,"name":"大竹林车场"}]}]}
+];
 			
 			
 		});
