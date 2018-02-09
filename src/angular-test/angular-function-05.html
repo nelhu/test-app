@@ -18,7 +18,27 @@
 		
 		<style type="text/css">
 			
-			
+			 .input{  
+            width:200px;  
+            height:30px;  
+            border:1px solid grey;  
+        }  
+        .input:empty::before{  
+            color:lightgrey;  
+            content:attr(placeholder);  
+        }  
+        
+        .test:empty {
+        	background: red;
+        	width: 60px;
+        	height: 20px;;
+        }
+        
+        .test:empty:before {
+        	content: attr(placeholder);
+        }
+        
+        
 		</style>
 		<title>angular tests</title>
 	</head>
@@ -45,7 +65,28 @@
 			<a ng-click='alert1()'>aaa</a>
 		</div>
 		
+		<div class="jumbotron">
+			
+			<p ng-repeat="i in [1, 2, 3, 4]"><input type="radio" name="aaa"/></p>
+			
+		</div>
 		
+		
+	 <div class="input" contenteditable placeholder="请输入文字"></div>  
+		
+		<div> 
+			<<p class="test" placeholder="assdasda"></p>
+		</div>
+		
+		<p contenteditable="true">这是一段可编辑的段落。请试着编辑该文本。</p>
+		
+		<div class="jumbotron">
+		
+			<textarea></textarea>
+			
+			<img onlick="alert('66')" src="../../img/icon/man.png"/>
+		
+		</div>
 	</body>
 	
 	<script type="text/javascript">

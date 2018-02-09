@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../../plugins/angular-ui-select/select.css"/>
+		
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		
+		<script src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+		<!--<script src="https://cdn.bootcss.com/require.js/2.3.5/require.js"></script>-->
+		<!--<script src="../../node_modules/angular/angular.js"></script>-->
+		 <script src="https://cdn.bootcss.com/angular.js/1.5.3/angular.js"></script>
+		 <script src="https://cdn.bootcss.com/angular-sanitize/1.5.3/angular-sanitize.js"></script>
+		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
+		<script src="../../plugins/angular-ui-select/select.js"></script>
+		
+		<script src="../../dist/my.js"></script>
+		
+		<style type="text/css">
+			
+			
+			
+		</style>
+		<title>select2 </title>
+	</head>
+	<body ng-app="AngularApp" ng-controller="AngularCtrl">
+		
+		
+		<div class="container">
+			{{one}}
+			
+			{{selected.value}}
+			<ui-select ng-model="selected.value">
+			    <ui-select-match>
+			        <span ng-bind="$select.selected.name"></span>
+			    </ui-select-match>
+			    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+			        <span ng-bind="item.name" ></span>
+			    </ui-select-choices>
+			</ui-select>
+
+ 		<div class="list-group">
+			    	<p class="list-group-item" ng-repeat="s in ss">{{s.name}}</p>
+			    </div>
+			
+		</div>
+		
+		
+		
+		<script type="text/ng-template" id="single-dropdown-select.html">
+			
+		</script>
+		
+	</body>
+	
+	<script type="text/javascript">
+		
+		var app = angular.module('AngularApp', ['ngSanitize', 'ui.select']);
+		
+		app.controller('AngularCtrl', function($scope, $http) {
+			
+			$scope.one = "mike";
+			$scope.email = "test";
+			
+			   $scope.itemArray = [
+        {id: 1, name: 'first'},
+        {id: 2, name: 'second'},
+        {id: 3, name: 'third'},
+        {id: 4, name: 'fourth'},
+        {id: 5, name: 'fifth'},
+    ];
+
+    $scope.selected = { value: $scope.itemArray[0] };
+    
+    $scope.$watch('itemArray', function(newVal, oldVal) {
+    	$scope.ss = newVal;
+    }, true);
+			
+		});
+			
+	</script>
+	
+</html>
