@@ -6,10 +6,10 @@
   "scripts": {
     "test": "test start"
   },
+  "author": "nelson",
   "keywords": [
     "nelson"
   ],
-  "author": "nelson",
   "license": "ISC",
   "dependencies": {
     "angular-hammer": "^2.2.0",
