@@ -15,10 +15,12 @@
 		<script src="../../node_modules/sweetalert/lib/sweet-alert.js"></script>
 		<script src="../../node_modules/angular-sweetalert/SweetAlert.js"></script>
 		<script src="../../node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
+		<script src="../../node_modules/pdfjs-dist/build/pdf.js"></script>
+		<script src="../../node_modules/angular-pdf/dist/angular-pdf.js"></script>
 		<script src="../../dist/my.js"></script>
 		
 		<style type="text/css">
-}
+
 
 			
 		</style>
@@ -32,6 +34,13 @@
 			{{one}}
 			
 			<button class="btn btn-primary" ng-click="toas()">btn</button>
+
+
+			<div class="jumbotron">
+				<div class="wrapper">
+					<ng-pdf template-url="pdf_viewer.html" scale="page-fit"></ng-pdf>
+				</div>
+			</div>
 			
 		</div>
 		
@@ -41,16 +50,11 @@
 	
 	<script type="text/javascript">
 		
-		var app = angular.module('AngularApp', ['toastr']);
+		var app = angular.module('AngularApp', ['toastr', 'pdf']);
 		
-		app.controller('AngularCtrl', function(toastr, $rootScope, $scope, $http, $document, $timeout, $interval, $window, $rootScope, $log, $parse) {
-			
-			$scope.one = "mike";
-			$scope.test = "test"
-			
-			$scope.toas = function() {
-				toastr.success('zz', 'bb');
-			};
+		app.controller('AngularCtrl', function($scope) {
+
+            $scope.pdfUrl = 'test.pdf';
 			
 //			
 		});
